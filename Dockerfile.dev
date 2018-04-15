@@ -3,11 +3,9 @@ FROM python:3.6.5-jessie
 ARG PROJECT_ROOT=/workdir/src/
 RUN mkdir -p ${PROJECT_ROOT}
 
-ADD requirements.txt ${PROJECT_ROOT}
-
 WORKDIR ${PROJECT_ROOT}
 
-RUN pip install flask
-# RUN pip install -r requirements.txt
+RUN pip install pipenv
+COPY ./Dockerrun.dev.sh ./
 
-CMD ["python", "index.py"]
+CMD ["sh", "Dockerrun.dev.sh", "pipenv", "run", "python", "index.py"]
