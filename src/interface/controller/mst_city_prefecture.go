@@ -3,7 +3,7 @@ package controller
 type HttpController struct {
 }
 
-func NewMstCityPrefecture() *HttpController {
+func NewMstPrefCity() *HttpController {
 	return &HttpController{}
 }
 
