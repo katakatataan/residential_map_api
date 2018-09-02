@@ -1,12 +1,21 @@
 package controller
 
-type HttpController struct {
+// ここのコントローラーはその外側のレイヤーから呼び出される
+// interfaceもstructに対して適応される
+//　ここにいぞんさせて実際にnewさせるのはinterfaceを実装したコントローラー
+type Controller interface {
+	GetMstPrefecture()
 }
 
-func NewMstPrefCity() *HttpController {
-	return &HttpController{}
+type MstPrefCityController struct {
+	Intaractor MstPrefCityInteractor
 }
 
-func GetMstPrefecture(hc HttpController) {
+func NewMstPrefCityController() *MstPrefCityController {
+	return &MstPrefCityController{}
+}
 
+func GetMstPrefCity(mpc *MstPrefCityController) {
+	//ここで実際の取得処理を書く
+	hc.Intaractor.get
 }
