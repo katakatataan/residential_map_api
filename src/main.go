@@ -1,7 +1,6 @@
 package main
 
 import (
-	"net/http"
 	"site_map_api/src/framework"
 
 	_ "github.com/lib/pq"
@@ -20,9 +19,4 @@ type Prefecture struct {
 func main() {
 	// Echo instance
 	framework.Run(echo.New())
-}
-
-// Handler
-func hello(c echo.Context) error {
-	return c.JSON(http.StatusOK, getAllPref())
 }
