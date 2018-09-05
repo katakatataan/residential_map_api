@@ -2,7 +2,6 @@ package framework
 
 import (
 	"fmt"
-	"os"
 	"residential_map_api/src/interface/controller"
 	"residential_map_api/src/usecase/interactor"
 
@@ -19,7 +18,7 @@ func Run(e *echo.Echo) {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	conn, err := sqlx.Connect("postgres", "user="+os.Getenv("DB_USER")+" password="+os.Getenv("DB_PASSWORD")+" dbname="+os.Getenv("DB_NAME")+" sslmode=disable")
+	conn, err := sqlx.Connect("postgres", "user=residential-map password=residential-map dbname=residential sslmode=disable")
 	if err != nil {
 		fmt.Println("connection error")
 	}
