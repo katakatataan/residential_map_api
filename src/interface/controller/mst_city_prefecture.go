@@ -1,21 +1,31 @@
 package controller
 
-// ここのコントローラーはその外側のレイヤーから呼び出される
-// interfaceもstructに対して適応される
-//　ここにいぞんさせて実際にnewさせるのはinterfaceを実装したコントローラー
-type Controller interface {
-	GetMstPrefecture()
+import (
+	"net/http"
+	"residential_map_api/src/usecase/interactor"
+
+	"github.com/labstack/echo"
+)
+
+type controller struct {
+	interactor interactor.MstPrefCityInteractor
 }
 
-type MstPrefCityController struct {
-	Intaractor MstPrefCityInteractor
+type MstPrefCityController interface {
+	GetMstPrefCity(c echo.Context) error
 }
 
-func NewMstPrefCityController() *MstPrefCityController {
-	return &MstPrefCityController{}
+func NewMstPrefCityController(it interactor.MstPrefCityInteractor) MstPrefCityController {
+	return &controller{
+		interactor: it,
+	}
 }
 
-func GetMstPrefCity(mpc *MstPrefCityController) {
+func (mpc *controller) GetMstPrefCity(c echo.Context) error {
 	//ここで実際の取得処理を書く
-	hc.Intaractor.get
+	result, err := mpc.interactor.FetchAllPrefCities()
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, result)
 }
