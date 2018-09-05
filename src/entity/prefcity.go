@@ -5,8 +5,8 @@ type PrefCity struct {
 	CityName string  `db:"city_name"`
 	CityFuri string  `db:"city_furi"`
 	PrefId   int64   `db:"pref_id"`
-	Lat      float64 `db:"lat"`
-	Lng      float64 `db:"lng"`
+	Lat      float64 `db:"city_lat"`
+	Lng      float64 `db:"city_lng"`
 	PrefName string  `db:"pref_name"`
 	PrefFuri string  `db:"pref_furi"`
 }
