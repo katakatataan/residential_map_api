@@ -9,6 +9,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
+	"github.com/sevenNt/echo-pprof"
 
 	_ "github.com/lib/pq"
 )
@@ -25,6 +26,7 @@ func Run(e *echo.Echo) {
 	prefCityController := controller.NewMstPrefCityController(interactor.NewMstPrefCityInteractor(conn))
 
 	e.GET("/", prefCityController.GetMstPrefCity)
+	echopprof.Wrap(e)
 
 	// Routes
 
