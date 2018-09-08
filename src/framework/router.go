@@ -18,6 +18,10 @@ func Run(e *echo.Echo) {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.BodyDump(func(c echo.Context, reqBody, resBody []byte) {
+		// 認証をつけル時のデバッグ用に作成
+		fmt.Printf("%s\n", reqBody)
+	}))
 
 	conn, err := sqlx.Connect("postgres", "user=residential-map password=residential-map dbname=residential sslmode=disable")
 	if err != nil {
