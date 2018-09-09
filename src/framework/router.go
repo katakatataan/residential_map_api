@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"residential_map_api/src/interface/controller"
 	"residential_map_api/src/usecase/interactor"
+	"residential_map_api/src/usecase/repository"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/jmoiron/sqlx"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
@@ -89,13 +89,12 @@ func Run(e *echo.Echo) {
 	}
 	r.Use(middleware.JWTWithConfig(config))
 	r.GET("", restricted)
-
+	err := NewSqlHandler()
 	//　ここの処理は切り分ける、一回のリクエストの中ではコネクションを使いまわして処理する。
-	conn, err := sqlx.Connect("postgres", "user=residential-map password=residential-map dbname=residential sslmode=disable")
-	if err != nil {
-		fmt.Println("connection error")
-	}
-	prefCityController := controller.NewMstPrefCityController(interactor.NewMstPrefCityInteractor(conn))
+	prefCityController := controller.NewMstPrefCityController(
+		interactor.NewMstPrefCityInteractor(
+			repository.NewMstPrefCityRepository(
+				NewSqlHandler())))
 
 	e.GET("/", prefCityController.GetMstPrefCity)
 	echopprof.Wrap(e)
