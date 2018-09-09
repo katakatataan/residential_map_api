@@ -22,7 +22,7 @@ func NewSqlHandler() SqlHandler {
 }
 
 func (h *SqlHandler) Get(res interface{}, query string, args ...interface{}) error {
-	err := h.Conn.Get(&res, query, args)
+	err := h.Conn.Get(res, query, args...)
 	if err != nil {
 		return err
 	}
@@ -30,7 +30,7 @@ func (h *SqlHandler) Get(res interface{}, query string, args ...interface{}) err
 }
 
 func (h *SqlHandler) Find(res interface{}, query string, args ...interface{}) error {
-	err := h.Conn.Select(&res, query, args)
+	err := h.Conn.Select(res, query, args...)
 	if err != nil {
 		return err
 	}
@@ -38,7 +38,7 @@ func (h *SqlHandler) Find(res interface{}, query string, args ...interface{}) er
 }
 
 func (h *SqlHandler) Insert(query string, args ...interface{}) (interface{}, error) {
-	result, err := h.Conn.Exec(query, args)
+	result, err := h.Conn.Exec(query, args...)
 	if err != nil {
 		return result, err
 	}
@@ -46,7 +46,7 @@ func (h *SqlHandler) Insert(query string, args ...interface{}) (interface{}, err
 }
 
 func (h *SqlHandler) Update(query string, args ...interface{}) (interface{}, error) {
-	result, err := h.Conn.Exec(query, args)
+	result, err := h.Conn.Exec(query, args...)
 	if err != nil {
 		return result, err
 	}

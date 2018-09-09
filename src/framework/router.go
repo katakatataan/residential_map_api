@@ -89,14 +89,15 @@ func Run(e *echo.Echo) {
 	}
 	r.Use(middleware.JWTWithConfig(config))
 	r.GET("", restricted)
-	err := NewSqlHandler()
+	sqlHandler := NewSqlHandler()
 	//　ここの処理は切り分ける、一回のリクエストの中ではコネクションを使いまわして処理する。
 	prefCityController := controller.NewMstPrefCityController(
 		interactor.NewMstPrefCityInteractor(
-			repository.NewMstPrefCityRepository(
-				NewSqlHandler())))
+			repository.NewMstPrefCityRepository(&sqlHandler)))
 
-	e.GET("/", prefCityController.GetMstPrefCity)
+	e.GET("/", func(c echo.Context) error {
+		return prefCityController.GetMstPrefCity(c)
+	})
 	echopprof.Wrap(e)
 	e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))
 }
