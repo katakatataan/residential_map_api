@@ -3,28 +3,25 @@ package interactor
 import (
 	"residential_map_api/src/entity"
 	"residential_map_api/src/usecase/repository"
-
-	"github.com/jmoiron/sqlx"
 )
 
 type interactor struct {
-	conn *sqlx.DB
+	Repository repository.MstPrefCityRepository
 }
 
 type MstPrefCityInteractor interface {
 	FetchAllPrefCities() (entity.PrefCities, error)
 }
 
-func NewMstPrefCityInteractor(conn *sqlx.DB) MstPrefCityInteractor {
+func NewMstPrefCityInteractor(repo repository.MstPrefCityRepository) MstPrefCityInteractor {
 	return &interactor{
-		conn: conn,
+		Repository: repo,
 	}
 }
 
 func (mpci *interactor) FetchAllPrefCities() (entity.PrefCities, error) {
 	// 理屈としてはこのusecaseレベルでconnecionを使いまわしたい
-	mpc := repository.NewMstPrefCityRepository(mpci.conn)
-	prefcities, err := mpc.FindAll()
+	prefcities, err := mpci.Repository.FindAll()
 	if err != nil {
 		return entity.PrefCities{}, err
 	}
