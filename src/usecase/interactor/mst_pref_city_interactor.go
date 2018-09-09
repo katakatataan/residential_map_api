@@ -20,7 +20,6 @@ func NewMstPrefCityInteractor(repo repository.MstPrefCityRepository) MstPrefCity
 }
 
 func (mpci *interactor) FetchAllPrefCities() (entity.PrefCities, error) {
-	// 理屈としてはこのusecaseレベルでconnecionを使いまわしたい
 	prefcities, err := mpci.Repository.FindAll()
 	if err != nil {
 		return entity.PrefCities{}, err
