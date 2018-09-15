@@ -12,8 +12,11 @@ type SqlHandler struct {
 }
 
 func NewSqlHandler() SqlHandler {
-	conn, err := sqlx.Connect("postgres", "user=residential-map password=residential-map dbname=residential sslmode=disable")
+	conn, err := sqlx.Connect("postgres", "user=residential-map password=residential-map dbname=residential host=127.0.0.1 port=5432 sslmode=disable")
 	if err != nil {
+		fmt.Println("connection error")
+	}
+	if conn == nil {
 		fmt.Println("connection error")
 	}
 	return SqlHandler{

@@ -4,7 +4,7 @@ import (
 	"residential_map_api/src/entity"
 )
 
-type repo struct {
+type mstprefcityrepo struct {
 	handler SqlHandler
 }
 
@@ -14,12 +14,12 @@ type MstPrefCityRepository interface {
 }
 
 func NewMstPrefCityRepository(handler SqlHandler) MstPrefCityRepository {
-	return repo{
+	return mstprefcityrepo{
 		handler: handler,
 	}
 }
 
-func (r repo) FindAll() (entity.PrefCities, error) {
+func (r mstprefcityrepo) FindAll() (entity.PrefCities, error) {
 	var prefcities entity.PrefCities
 	err := r.handler.Find(&prefcities, "SELECT * FROM mst_pref_city ORDER BY id ASC")
 	if err != nil {
