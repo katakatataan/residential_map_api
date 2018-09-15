@@ -5,7 +5,7 @@ import (
 	"residential_map_api/src/usecase/interactor"
 )
 
-type controller struct {
+type mstprefcitycontroller struct {
 	interactor interactor.MstPrefCityInteractor
 }
 
@@ -14,12 +14,12 @@ type MstPrefCityController interface {
 }
 
 func NewMstPrefCityController(it interactor.MstPrefCityInteractor) MstPrefCityController {
-	return &controller{
+	return &mstprefcitycontroller{
 		interactor: it,
 	}
 }
 
-func (mpc *controller) GetMstPrefCity(c Context) error {
+func (mpc *mstprefcitycontroller) GetMstPrefCity(c Context) error {
 	//ここで実際の取得処理を書く
 	result, err := mpc.interactor.FetchAllPrefCities()
 	if err != nil {

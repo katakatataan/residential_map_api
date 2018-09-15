@@ -2,12 +2,15 @@ package framework
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"github.com/paulmach/go.geojson"
 )
 
 func routeForDebug(e *echo.Echo) {
@@ -15,6 +18,20 @@ func routeForDebug(e *echo.Echo) {
 		// 認証をつけル時のデバッグ用に作成
 		fmt.Printf("%s\n", reqBody)
 	}))
+	e.GET("/geo", func(c echo.Context) error {
+		res, err := http.Get("https://storage.googleapis.com/analyze-residential.appspot.com/geo_optimize/201801-1.geojson")
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		defer res.Body.Close()
+		body, error := ioutil.ReadAll(res.Body)
+		if error != nil {
+			log.Fatal(error)
+		}
+		fc, err := geojson.UnmarshalFeatureCollection(body)
+		return c.JSON(200, fc)
+	})
 	e.GET("/request", func(c echo.Context) error {
 		req := c.Request()
 		format := `

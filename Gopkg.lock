@@ -44,6 +44,12 @@
   version = "v0.0.3"
 
 [[projects]]
+  name = "github.com/paulmach/go.geojson"
+  packages = ["."]
+  revision = "a5c451da2d9c67c590ae6be92565b67698286a1a"
+  version = "v1.4"
+
+[[projects]]
   name = "github.com/sevenNt/echo-pprof"
   packages = ["."]
   revision = "8bdaf794e4583c013a089f3902aa140d45a5af1c"
@@ -76,6 +82,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "88fe4fdb9ca8f80eaa89fee6b6ebc294ce9fad96ac4b5fd28ab447724534e439"
+  inputs-digest = "2248bf556f889f20e6ef6e1b4c0b4aafb84664491034cd15e4cd35fc3048cfd7"
   solver-name = "gps-cdcl"
   solver-version = 1

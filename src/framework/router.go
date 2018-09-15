@@ -37,5 +37,6 @@ func Run(e *echo.Echo) {
 	})
 
 	echopprof.Wrap(e)
-	e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))
+	// e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))
+	e.Logger.Fatal(e.Start(":1323"))
 }
