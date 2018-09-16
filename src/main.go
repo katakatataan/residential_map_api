@@ -1,7 +1,7 @@
 package main
 
 import (
-	"residential_map_api/src/framework"
+	"residential_map_api/src/infrastructure"
 
 	_ "github.com/lib/pq"
 
@@ -11,5 +11,5 @@ import (
 
 func main() {
 	// Echo instance
-	framework.Run(echo.New())
+	infrastructure.Run(echo.New())
 }
