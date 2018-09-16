@@ -2,26 +2,39 @@ package controller
 
 import (
 	"net/http"
+	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/interactor"
 )
 
-type cdcontroller struct {
-	interactor interactor.CityDataInteractor
+type cityDataController struct {
+	Interactor interactor.CityDataInteractor
 }
 
 type CityDataController interface {
+	GetCityDataByBuildDate(c Context) error
 	GetCityData(c Context) error
 }
 
-func NewCityDataController(it interactor.CityDataInteractor) CityDataController {
-	return &cdcontroller{
-		interactor: it,
+func NewCityDataController(sqlHandler gateway.SqlHandler) CityDataController {
+	return &cityDataController{
+		Interactor: interactor.CityDataInteractor{
+			Repository: &gateway.CityDataGateway{
+				SqlHandler: sqlHandler,
+			},
+		},
 	}
 }
 
-func (cd *cdcontroller) GetCityData(c Context) error {
-	//ここで実際の取得処理を書く
-	result, err := cd.interactor.FetchCityDatasByBuildDate()
+func (cd *cityDataController) GetCityDataByBuildDate(c Context) error {
+	result, err := cd.Interactor.FetchCityDatasByBuildDate()
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, result)
+}
+
+func (cd *cityDataController) GetCityData(c Context) error {
+	result, err := cd.Interactor.FetchAllCityData()
 	if err != nil {
 		return err
 	}
