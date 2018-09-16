@@ -32,8 +32,16 @@ func Run(e *echo.Echo) {
 		interactor.NewMstPrefCityInteractor(
 			repository.NewMstPrefCityRepository(&sqlHandler)))
 
+	cityDataController := controller.NewCityDataController(
+		interactor.NewCityDataInteractor(
+			repository.NewCityDataRepository(&sqlHandler)))
+
 	e.GET("/prefcities", func(c echo.Context) error {
 		return prefCityController.GetMstPrefCity(c)
+	})
+
+	e.GET("/citydata", func(c echo.Context) error {
+		return cityDataController.GetCityData(c)
 	})
 
 	echopprof.Wrap(e)
