@@ -1,4 +1,4 @@
-package framework
+package infrastructure
 
 import (
 	"residential_map_api/src/interface/controller"
