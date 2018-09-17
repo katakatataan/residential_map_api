@@ -32,14 +32,14 @@ func Run(e *echo.Echo) {
 		interactor.NewMstPrefCityInteractor(
 			repository.NewMstPrefCityRepository(&sqlHandler)))
 
-	cityDataController := controller.NewCityDataController(sqlHandler)
+	cityDataController := controller.NewCityDataController(&sqlHandler)
 
 	e.GET("/prefcities", func(c echo.Context) error {
 		return prefCityController.GetMstPrefCity(c)
 	})
 
-	e.GET("/citydata", cityDataController.GetCityData(echo.Context))
-	e.GET("/citydata/buildDate", cityDataController.GetCityDataByBuildDate(echo.Context))
+	e.GET("/citydata", func(c echo.Context) error { return cityDataController.GetCityData(c) })
+	e.GET("/citydata/buildDate", func(c echo.Context) error { return cityDataController.GetCityDataByBuildDate(c) })
 
 	echopprof.Wrap(e)
 	// e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))
