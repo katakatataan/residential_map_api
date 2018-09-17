@@ -4,33 +4,35 @@ import (
 	"residential_map_api/src/entity"
 )
 
-type cityDataGateway struct {
-	Handler SqlHandler
+type CityDataGateway struct {
+	SqlHandler
 }
 
-type CityDataGateway interface {
-	FindByBuildDate(entity.CityDatas) error
-	FindAll(entity.CityDatas) error
-}
+// type CityDataGateway interface {
+// 	FindByBuildDate() (entity.CityDatas, error)
+// 	FindAll() (entity.CityDatas, error)
+// }
 
-func NewCityDataGateway(handler SqlHandler) CityDataGateway {
-	return &cityDataGateway{
-		Handler: handler,
-	}
-}
+// func NewCityDataGateway(sqlHandler SqlHandler) CityDataGateway {
+// 	return &cityDataGateway{
+// 		Handler: sqlHandler,
+// 	}
+// }
 
-func (cdg *cityDataGateway) FindByBuildDate(cityDatas entity.CityDatas) error {
-	err := cdg.Handler.Find(&cityDatas, "SELECT * FROM city_data ORDER BY id ASC limit 10")
+func (cdg *CityDataGateway) FindByBuildDate() (entity.CityDatas, error) {
+	var cityDatas entity.CityDatas
+	err := cdg.Find(&cityDatas, "SELECT * FROM city_data ORDER BY id ASC limit 10")
 	if err != nil {
-		return err
+		return entity.CityDatas{}, err
 	}
-	return nil
+	return cityDatas, nil
 }
 
-func (cdg *cityDataGateway) FindAll(cityDatas entity.CityDatas) error {
-	err := cdg.Handler.Find(&cityDatas, "SELECT * FROM city_data limit 10")
+func (cdg *CityDataGateway) FindAll() (entity.CityDatas, error) {
+	var cityDatas entity.CityDatas
+	err := cdg.Find(&cityDatas, "SELECT * FROM city_data limit 10")
 	if err != nil {
-		return err
+		return entity.CityDatas{}, err
 	}
-	return nil
+	return cityDatas, nil
 }

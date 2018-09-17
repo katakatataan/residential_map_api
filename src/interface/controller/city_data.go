@@ -15,7 +15,7 @@ type CityDataController interface {
 	GetCityData(c Context) error
 }
 
-func NewCityDataController(sqlHandler gateway.SqlHandler) CityDataController {
+func NewCityDataController(sqlHandler gateway.SqlHandler) *cityDataController {
 	return &cityDataController{
 		Interactor: interactor.CityDataInteractor{
 			Repository: &gateway.CityDataGateway{
