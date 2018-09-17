@@ -9,17 +9,6 @@ type CityDataInteractor struct {
 	Repository repository.CityDataRepository
 }
 
-// type CityDataInteractor interface {
-// 	FetchCityDatasByBuildDate() (entity.CityDatas, error)
-// 	FetchAllCityData() (entity.CityDatas, error)
-// }
-
-// func NewCityDataInteractor(repo repository.CityDataRepository) CityDataInteractor {
-// 	return &cityDataInteractor{
-// 		Repository: repo,
-// 	}
-// }
-
 func (cdi *CityDataInteractor) FetchCityDatasByBuildDate() (entity.CityDatas, error) {
 	var citydata entity.CityDatas
 	citydata, err := cdi.Repository.FindByBuildDate()

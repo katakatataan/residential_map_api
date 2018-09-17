@@ -8,20 +8,9 @@ type CityDataGateway struct {
 	SqlHandler
 }
 
-// type CityDataGateway interface {
-// 	FindByBuildDate() (entity.CityDatas, error)
-// 	FindAll() (entity.CityDatas, error)
-// }
-
-// func NewCityDataGateway(sqlHandler SqlHandler) CityDataGateway {
-// 	return &cityDataGateway{
-// 		Handler: sqlHandler,
-// 	}
-// }
-
 func (cdg *CityDataGateway) FindByBuildDate() (entity.CityDatas, error) {
 	var cityDatas entity.CityDatas
-	err := cdg.Find(&cityDatas, "SELECT * FROM city_data ORDER BY id ASC limit 10")
+	err := cdg.Find(&cityDatas, "SELECT * FROM city_data ORDER BY id ASC limit 3")
 	if err != nil {
 		return entity.CityDatas{}, err
 	}
