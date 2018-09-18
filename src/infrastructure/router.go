@@ -2,8 +2,6 @@ package infrastructure
 
 import (
 	"residential_map_api/src/interface/controller"
-	"residential_map_api/src/usecase/interactor"
-	"residential_map_api/src/usecase/repository"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
@@ -28,12 +26,18 @@ func Run(e *echo.Echo) {
 	routeForAuthRequired(e.Group("/restricted"))
 
 	sqlHandler := NewSqlHandler()
-	prefCityController := controller.NewMstPrefCityController(
-		interactor.NewMstPrefCityInteractor(
-			repository.NewMstPrefCityRepository(&sqlHandler)))
+	mstPrefCityController := controller.NewMstPrefCityController(&sqlHandler)
+	cityDataController := controller.NewCityDataController(&sqlHandler)
 
 	e.GET("/prefcities", func(c echo.Context) error {
-		return prefCityController.GetMstPrefCity(c)
+		return mstPrefCityController.GetMstPrefCity(c)
+	})
+
+	e.GET("/citydata", func(c echo.Context) error {
+		return cityDataController.GetCityData(c)
+	})
+	e.GET("/citydata/buildDate", func(c echo.Context) error {
+		return cityDataController.GetCityDataByBuildDate(c)
 	})
 
 	echopprof.Wrap(e)
