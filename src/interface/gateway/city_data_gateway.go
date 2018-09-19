@@ -8,18 +8,18 @@ type CityDataGateway struct {
 	SqlHandler
 }
 
-func (cdg *CityDataGateway) FindByBuildDate() (entity.CityDatas, error) {
+func (cdg *CityDataGateway) FindAll() (entity.CityDatas, error) {
 	var cityDatas entity.CityDatas
-	err := cdg.Find(&cityDatas, "SELECT * FROM city_data ORDER BY id ASC limit 3")
+	err := cdg.Find(&cityDatas, "SELECT * FROM city_data limit 10")
 	if err != nil {
 		return entity.CityDatas{}, err
 	}
 	return cityDatas, nil
 }
 
-func (cdg *CityDataGateway) FindAll() (entity.CityDatas, error) {
+func (cdg *CityDataGateway) FindById(identifer int) (entity.CityDatas, error) {
 	var cityDatas entity.CityDatas
-	err := cdg.Find(&cityDatas, "SELECT * FROM city_data limit 10")
+	err := cdg.Find(&cityDatas, "SELECT * FROM city_data where id = $1", identifer)
 	if err != nil {
 		return entity.CityDatas{}, err
 	}

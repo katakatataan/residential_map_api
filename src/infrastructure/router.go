@@ -36,8 +36,8 @@ func Run(e *echo.Echo) {
 	e.GET("/citydata", func(c echo.Context) error {
 		return cityDataController.GetCityData(c)
 	})
-	e.GET("/citydata/buildDate", func(c echo.Context) error {
-		return cityDataController.GetCityDataByBuildDate(c)
+	e.GET("/citydata/:id", func(c echo.Context) error {
+		return cityDataController.GetCityDataById(c)
 	})
 
 	echopprof.Wrap(e)

@@ -9,18 +9,18 @@ type CityDataInteractor struct {
 	Repository repository.CityDataRepository
 }
 
-func (cdi *CityDataInteractor) FetchCityDatasByBuildDate() (entity.CityDatas, error) {
+func (cdi *CityDataInteractor) FetchAllCityData() (entity.CityDatas, error) {
 	var citydata entity.CityDatas
-	citydata, err := cdi.Repository.FindByBuildDate()
+	citydata, err := cdi.Repository.FindAll()
 	if err != nil {
 		return entity.CityDatas{}, err
 	}
 	return citydata, nil
 }
 
-func (cdi *CityDataInteractor) FetchAllCityData() (entity.CityDatas, error) {
+func (cdi *CityDataInteractor) FetchCityDatasById(identifer int) (entity.CityDatas, error) {
 	var citydata entity.CityDatas
-	citydata, err := cdi.Repository.FindAll()
+	citydata, err := cdi.Repository.FindById(identifer)
 	if err != nil {
 		return entity.CityDatas{}, err
 	}

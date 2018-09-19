@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/interactor"
+	"strconv"
 )
 
 type cityDataController struct {
@@ -25,18 +26,19 @@ func NewCityDataController(sqlHandler gateway.SqlHandler) *cityDataController {
 	}
 }
 
-func (cd *cityDataController) GetCityDataByBuildDate(c Context) error {
-	result, err := cd.Interactor.FetchCityDatasByBuildDate()
+func (cd *cityDataController) GetCityData(c Context) error {
+	result, err := cd.Interactor.FetchAllCityData()
 	if err != nil {
-		return err
+		return c.JSON(500, err)
 	}
 	return c.JSON(http.StatusOK, result)
 }
 
-func (cd *cityDataController) GetCityData(c Context) error {
-	result, err := cd.Interactor.FetchAllCityData()
+func (cd *cityDataController) GetCityDataById(c Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+	result, err := cd.Interactor.FetchCityDatasById(id)
 	if err != nil {
-		return err
+		return c.JSON(500, err)
 	}
 	return c.JSON(http.StatusOK, result)
 }
