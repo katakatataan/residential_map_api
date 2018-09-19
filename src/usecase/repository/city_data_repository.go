@@ -5,6 +5,6 @@ import (
 )
 
 type CityDataRepository interface {
-	FindByBuildDate() (entity.CityDatas, error)
 	FindAll() (entity.CityDatas, error)
+	FindById(id int) (entity.CityDatas, error)
 }
