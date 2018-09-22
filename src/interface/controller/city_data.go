@@ -36,6 +36,11 @@ func (cd *cityDataController) GetCityData(c Context) error {
 
 func (cd *cityDataController) GetCityDataById(c Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
+	// test := "test"
+	validateErr := c.Validate(id)
+	if validateErr != nil {
+		return c.JSON(400, validateErr)
+	}
 	result, err := cd.Interactor.FetchCityDatasById(id)
 	if err != nil {
 		return c.JSON(500, err)

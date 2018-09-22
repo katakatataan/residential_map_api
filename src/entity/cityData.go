@@ -5,8 +5,8 @@ import (
 )
 
 type CityData struct {
-	Id                   int64          `db:"id" json:"id"`
-	BuiltCount           int64          `db:"built_count" json:"built_count"`
+	Id                   int64          `db:"id" json:"id" validate:"required"`
+	BuiltCount           int64          `db:"built_count" json:"built_count""`
 	TotalSquareMeter     int64          `db:"total_square_meter" json:"total_square_meter"`
 	Year                 int64          `db:"year" json:"year"`
 	Month                int64          `db:"month" json:"month"`

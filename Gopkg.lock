@@ -10,6 +10,25 @@
   version = "v3.2.0"
 
 [[projects]]
+  digest = "1:709292c015123a3bc69ea970dc9abd6667170e7fbf5cdeb10c6d14b250d3385f"
+  name = "github.com/go-playground/locales"
+  packages = [
+    ".",
+    "currency",
+  ]
+  pruneopts = ""
+  revision = "f63010822830b6fe52288ee52d5a1151088ce039"
+  version = "v0.12.1"
+
+[[projects]]
+  digest = "1:7ca0f6f2a364f603e843763d35c979b595d71159982791de27f9ec40d532876b"
+  name = "github.com/go-playground/universal-translator"
+  packages = ["."]
+  pruneopts = ""
+  revision = "b32fa301c9fe55953584134cb6853a13c87ec0a1"
+  version = "v0.16.0"
+
+[[projects]]
   branch = "master"
   digest = "1:617ee2434b77e911fa26b678730be9a617f75243b194eadc8201c8ac860844aa"
   name = "github.com/jmoiron/sqlx"
@@ -130,6 +149,14 @@
   pruneopts = ""
   revision = "4ea2f632f6e912459fe60b26b1749377f0d889d5"
 
+[[projects]]
+  digest = "1:1bf3b097be03093777f984614d67c4550f8295cdf3b6eb8759ed08e97d417c40"
+  name = "gopkg.in/go-playground/validator.v9"
+  packages = ["."]
+  pruneopts = ""
+  revision = "e69e9a28bb62b977fdc58d051f1bb477b7cbe486"
+  version = "v9.21.0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
@@ -142,6 +169,7 @@
     "github.com/lib/pq",
     "github.com/paulmach/go.geojson",
     "github.com/sevenNt/echo-pprof",
+    "gopkg.in/go-playground/validator.v9",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

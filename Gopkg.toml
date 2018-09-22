@@ -35,3 +35,7 @@
 [[constraint]]
   name = "github.com/paulmach/go.geojson"
   version = "1.4.0"
+
+[[constraint]]
+  name = "github.com/go-playground/validator.git"
+  version = "9.21.0"
