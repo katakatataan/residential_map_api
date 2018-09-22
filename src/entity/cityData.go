@@ -18,7 +18,7 @@ type CityData struct {
 	StructureType        int64          `db:"structure_type" json:"structure_type"`
 	PrefId               int64          `db:"pref_id" json:"pref_id"`
 	CityName             sql.NullString `db:"city_name" json:"city_name"`
-	PrefName             sql.NullString `db:"pref_name" json:"pref_nam"`
+	PrefName             sql.NullString `db:"pref_name" json:"pref_name"`
 	BuildDate            string         `db:"build_date" json:"build_date"`
 }
 
