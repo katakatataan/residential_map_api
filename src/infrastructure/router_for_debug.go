@@ -19,6 +19,10 @@ func routeForDebug(e *echo.Echo) {
 		// 認証をつけル時のデバッグ用に作成
 		fmt.Printf("%s\n", reqBody)
 	}))
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{echo.GET, echo.PUT, echo.POST, echo.DELETE},
+	}))
 	e.GET("/geo", func(c echo.Context) error {
 		res, err := http.Get("https://storage.googleapis.com/analyze-residential.appspot.com/geo_optimize/201801-1.geojson")
 		res2, err := http.Get("https://storage.googleapis.com/analyze-residential.appspot.com/geo_optimize/201801-2.geojson")
