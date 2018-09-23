@@ -10,7 +10,8 @@ type CityDataGateway struct {
 
 func (cdg *CityDataGateway) FindAll() (entity.CityDatas, error) {
 	var cityDatas entity.CityDatas
-	err := cdg.Find(&cityDatas, "SELECT * FROM city_data limit 10")
+	q := "SELECT * FROM city_data limit 10"
+	err := cdg.Find(&cityDatas, q)
 	if err != nil {
 		return entity.CityDatas{}, err
 	}

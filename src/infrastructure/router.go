@@ -22,6 +22,8 @@ func Run(e *echo.Echo) {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	// Validator
+	e.Validator = NewValidator()
 	routeForDebug(e)
 	routeForAuthRequired(e.Group("/restricted"))
 
