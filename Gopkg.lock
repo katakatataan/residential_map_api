@@ -157,6 +157,14 @@
   revision = "e69e9a28bb62b977fdc58d051f1bb477b7cbe486"
   version = "v9.21.0"
 
+[[projects]]
+  digest = "1:1582dd711e6e5ef92d6245a5dd0646da19d0d0acb94ea615d43896b7b6c6620b"
+  name = "gopkg.in/guregu/null.v3"
+  packages = ["."]
+  pruneopts = ""
+  revision = "80515d440932108546bcade467bb7d6968e812e2"
+  version = "v3.4.0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
@@ -170,6 +178,7 @@
     "github.com/paulmach/go.geojson",
     "github.com/sevenNt/echo-pprof",
     "gopkg.in/go-playground/validator.v9",
+    "gopkg.in/guregu/null.v3",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

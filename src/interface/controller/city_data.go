@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"residential_map_api/src/entity"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/interactor"
 	"strconv"
@@ -27,6 +28,13 @@ func NewCityDataController(sqlHandler gateway.SqlHandler) *cityDataController {
 }
 
 func (cd *cityDataController) GetCityData(c Context) error {
+	e := new(entity.CityData)
+	if err := c.Bind(e); err != nil {
+		return c.JSON(500, err.Error())
+	}
+	if err := c.Validate(e); err != nil {
+		return c.JSON(400, err.Error())
+	}
 	result, err := cd.Interactor.FetchAllCityData()
 	if err != nil {
 		return c.JSON(500, err)
@@ -36,11 +44,6 @@ func (cd *cityDataController) GetCityData(c Context) error {
 
 func (cd *cityDataController) GetCityDataById(c Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	// test := "test"
-	validateErr := c.Validate(id)
-	if validateErr != nil {
-		return c.JSON(400, validateErr)
-	}
 	result, err := cd.Interactor.FetchCityDatasById(id)
 	if err != nil {
 		return c.JSON(500, err)
