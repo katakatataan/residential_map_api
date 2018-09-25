@@ -6,8 +6,8 @@ type CityData struct {
 	Id                   int64       `db:"id" json:"id"`
 	BuiltCount           int64       `db:"built_count" json:"built_count"`
 	TotalSquareMeter     int64       `db:"total_square_meter" json:"total_square_meter"`
-	Year                 int64       `db:"year" json:"year" validate:"required,numeric,max=2099,min=1950"`
-	Month                int64       `db:"month" json:"month" validate:"required,numeric,max=12,min=1"`
+	Year                 int64       `db:"year" json:"year"`
+	Month                int64       `db:"month" json:"month"`
 	ResidentialUseTypeId int64       `db:"residential_use_type_id" json:"residential_use_type"`
 	ConstructionTypeId   int64       `db:"construction_type_id" json:"construction_type_id"`
 	CityId               int64       `db:"city_id" json:"city_id"`

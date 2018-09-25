@@ -31,15 +31,12 @@ func Run(e *echo.Echo) {
 	mstPrefCityController := controller.NewMstPrefCityController(&sqlHandler)
 	cityDataController := controller.NewCityDataController(&sqlHandler)
 
-	e.GET("/prefcities", func(c echo.Context) error {
+	e.GET("/mst_prefcities", func(c echo.Context) error {
 		return mstPrefCityController.GetMstPrefCity(c)
 	})
 
 	e.GET("/citydata", func(c echo.Context) error {
-		return cityDataController.GetCityData(c)
-	})
-	e.GET("/citydata/:id", func(c echo.Context) error {
-		return cityDataController.GetCityDataById(c)
+		return cityDataController.GetCityDataByCityId(c)
 	})
 
 	echopprof.Wrap(e)

@@ -2,9 +2,10 @@ package repository
 
 import (
 	"residential_map_api/src/entity"
+	"residential_map_api/src/usecase/dto"
 )
 
 type CityDataRepository interface {
 	FindAll() (entity.CityDatas, error)
-	FindById(id int) (entity.CityDatas, error)
+	FindByCityId(*dto.CityDataParamDto) (entity.CityDatas, error)
 }
