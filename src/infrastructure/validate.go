@@ -14,11 +14,5 @@ func NewValidator() echo.Validator {
 }
 
 func (cv *CustomValidator) Validate(i interface{}) error {
-	// validate項目に"BuildDate"タグを追加
-	cv.Validator.RegisterValidation("BuildDate", DateValidator)
 	return cv.Validator.Struct(i)
-}
-
-func DateValidator(fl validator.FieldLevel) bool {
-	return fl.Field().String() == "test"
 }

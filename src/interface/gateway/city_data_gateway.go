@@ -2,6 +2,7 @@ package gateway
 
 import (
 	"residential_map_api/src/entity"
+	"residential_map_api/src/usecase/dto"
 )
 
 type CityDataGateway struct {
@@ -10,7 +11,7 @@ type CityDataGateway struct {
 
 func (cdg *CityDataGateway) FindAll() (entity.CityDatas, error) {
 	var cityDatas entity.CityDatas
-	q := "SELECT * FROM city_data limit 10"
+	q := "SELECT * FROM city_data limit 1000"
 	err := cdg.Find(&cityDatas, q)
 	if err != nil {
 		return entity.CityDatas{}, err
@@ -18,9 +19,9 @@ func (cdg *CityDataGateway) FindAll() (entity.CityDatas, error) {
 	return cityDatas, nil
 }
 
-func (cdg *CityDataGateway) FindById(identifer int) (entity.CityDatas, error) {
+func (cdg *CityDataGateway) FindByCityId(cityDataParam *dto.CityDataParamDto) (entity.CityDatas, error) {
 	var cityDatas entity.CityDatas
-	err := cdg.Find(&cityDatas, "SELECT * FROM city_data where id = $1", identifer)
+	err := cdg.Find(&cityDatas, "SELECT * FROM city_data WHERE city_id = $1 AND build_date >= $2 AND build_date < $3", cityDataParam.CityId, cityDataParam.From, cityDataParam.To)
 	if err != nil {
 		return entity.CityDatas{}, err
 	}
