@@ -39,6 +39,10 @@ func Run(e *echo.Echo) {
 		return cityDataController.GetCityDataByCityId(c)
 	})
 
+	e.GET("/monthlycitydatarank", func(c echo.Context) error {
+		return cityDataController.GetCityDataRanking(c)
+	})
+
 	echopprof.Wrap(e)
 	// e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))
 	e.Logger.Fatal(e.Start(":1323"))
