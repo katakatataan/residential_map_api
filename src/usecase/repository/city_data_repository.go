@@ -8,5 +8,5 @@ import (
 type CityDataRepository interface {
 	FindAll() (entity.CityDatas, error)
 	FindByCityId(*dto.CityDataParamDto) (entity.CityDatas, error)
-	GetMonthlyRanking(*dto.CityDataParamDto) (dto.CityDatasDto, error)
+	GetMonthlyCityRanking(*dto.CityDataParamDto) (dto.CityDatasDto, error)
 }
