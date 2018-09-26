@@ -39,6 +39,10 @@ func Run(e *echo.Echo) {
 		return cityDataController.GetCityDataByCityId(c)
 	})
 
+	e.GET("/prefdata", func(c echo.Context) error {
+		return cityDataController.GetCityDataByPrefId(c)
+	})
+
 	e.GET("/monthlycitydatarank", func(c echo.Context) error {
 		return cityDataController.GetCityDataRanking(c)
 	})

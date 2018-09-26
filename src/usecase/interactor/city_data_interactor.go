@@ -28,6 +28,15 @@ func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *dto.CityDataPar
 	return citydata, nil
 }
 
+func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *dto.CityDataParamDto) (entity.CityDatas, error) {
+	var citydata entity.CityDatas
+	citydata, err := cdi.Repository.FindByPrefId(cityDataParam)
+	if err != nil {
+		return entity.CityDatas{}, err
+	}
+	return citydata, nil
+}
+
 func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *dto.CityDataParamDto) (dto.CityDatasDto, error) {
 	var citydata dto.CityDatasDto
 	citydata, err := cdi.Repository.GetMonthlyCityRanking(cityDataParam)
