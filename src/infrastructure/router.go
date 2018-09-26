@@ -43,6 +43,9 @@ func Run(e *echo.Echo) {
 		return cityDataController.GetCityDataRanking(c)
 	})
 
+	e.GET("/monthlyprefdatarank", func(c echo.Context) error {
+		return cityDataController.GetPrefDataRanking(c)
+	})
 	echopprof.Wrap(e)
 	// e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))
 	e.Logger.Fatal(e.Start(":1323"))
