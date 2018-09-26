@@ -30,7 +30,7 @@ func (cdg *CityDataGateway) FindByCityId(cityDataParam *dto.CityDataParamDto) (e
 	return cityDatas, nil
 }
 
-func (cdg *CityDataGateway) GetMonthlyRanking(cityDataParam *dto.CityDataParamDto) (dto.CityDatasDto, error) {
+func (cdg *CityDataGateway) GetMonthlyCityRanking(cityDataParam *dto.CityDataParamDto) (dto.CityDatasDto, error) {
 	var cityDatas dto.CityDatasDto
 	pp.Println(cityDataParam)
 	err := cdg.Find(&cityDatas, "SELECT  * ,rank() over( partition by date_trunc('month',build_date) order by built_count desc) as monthly_rank FROM city_data WHERE pref_id = $1 AND  build_date >= $2 AND build_date < $3  ORDER BY date_trunc('month', build_date)", cityDataParam.PrefId, cityDataParam.From, cityDataParam.To)

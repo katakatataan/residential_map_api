@@ -30,7 +30,7 @@ func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *dto.CityDataPar
 
 func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *dto.CityDataParamDto) (dto.CityDatasDto, error) {
 	var citydata dto.CityDatasDto
-	citydata, err := cdi.Repository.GetMonthlyRanking(cityDataParam)
+	citydata, err := cdi.Repository.GetMonthlyCityRanking(cityDataParam)
 	if err != nil {
 		return dto.CityDatasDto{}, err
 	}
