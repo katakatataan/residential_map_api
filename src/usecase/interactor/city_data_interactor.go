@@ -27,3 +27,12 @@ func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *dto.CityDataPar
 	}
 	return citydata, nil
 }
+
+func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *dto.CityDataParamDto) (dto.CityDatasDto, error) {
+	var citydata dto.CityDatasDto
+	citydata, err := cdi.Repository.GetMonthlyRanking(cityDataParam)
+	if err != nil {
+		return dto.CityDatasDto{}, err
+	}
+	return citydata, nil
+}
