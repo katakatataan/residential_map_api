@@ -16,7 +16,7 @@ type CityDataDto struct {
 	StructureType        int64       `db:"structure_type" json:"structure_type"`
 	PrefId               int64       `db:"pref_id" json:"pref_id"`
 	CityName             null.String `db:"city_name" json:"city_name"`
-	PrefName             null.String `db:"pref_name" json:"pref_nam"`
+	PrefName             null.String `db:"pref_name" json:"pref_name"`
 	BuildDate            string      `db:"build_date" json:"build_date"`
 	MontylyRank          int64       `db:"monthly_rank" json:"monthly_rank"`
 }
