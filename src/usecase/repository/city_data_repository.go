@@ -8,6 +8,7 @@ import (
 type CityDataRepository interface {
 	FindAll() (entity.CityDatas, error)
 	FindByCityId(*dto.CityDataParamDto) (entity.CityDatas, error)
+	FindByPrefId(*dto.CityDataParamDto) (entity.CityDatas, error)
 	GetMonthlyCityRanking(*dto.CityDataParamDto) (dto.CityDatasDto, error)
 	GetMonthlyPrefRanking(*dto.CityDataParamDto) (dto.CityDatasDto, error)
 }

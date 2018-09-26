@@ -38,6 +38,21 @@ func (cd *CityDataController) GetCityDataByCityId(c Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
+func (cd *CityDataController) GetCityDataByPrefId(c Context) error {
+	cityDataParam := new(dto.CityDataParamDto)
+	err := c.Bind(cityDataParam)
+	if err != nil {
+		return c.JSON(404, err)
+	}
+	err = c.Validate(cityDataParam)
+	if err != nil {
+		pp.Println(err)
+		return c.JSON(404, err)
+	}
+	result, err := cd.Interactor.FetchCityDatasByPrefId(cityDataParam)
+	return c.JSON(http.StatusOK, result)
+}
+
 func (cd *CityDataController) GetCityDataRanking(c Context) error {
 	cityDataParam := new(dto.CityDataParamDto)
 	err := c.Bind(cityDataParam)

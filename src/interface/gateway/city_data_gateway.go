@@ -30,6 +30,15 @@ func (cdg *CityDataGateway) FindByCityId(cityDataParam *dto.CityDataParamDto) (e
 	return cityDatas, nil
 }
 
+func (cdg *CityDataGateway) FindByPrefId(cityDataParam *dto.CityDataParamDto) (entity.CityDatas, error) {
+	var cityDatas entity.CityDatas
+	err := cdg.Find(&cityDatas, "SELECT pref_id, pref_name, SUM(built_count) as built_count, SUM(total_square_meter) AS total_square_meter,  date_trunc('month', build_date) as build_date FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 GROUP BY pref_id, pref_name,  build_date ORDER BY  build_date ASC", cityDataParam.CityId, cityDataParam.From, cityDataParam.To)
+	if err != nil {
+		return entity.CityDatas{}, err
+	}
+	return cityDatas, nil
+}
+
 func (cdg *CityDataGateway) GetMonthlyCityRanking(cityDataParam *dto.CityDataParamDto) (dto.CityDatasDto, error) {
 	var cityDatas dto.CityDatasDto
 	pp.Println(cityDataParam)
