@@ -36,3 +36,12 @@ func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *dto.CityDataPar
 	}
 	return citydata, nil
 }
+
+func (cdi *CityDataInteractor) GetPrefDataRanking(cityDataParam *dto.CityDataParamDto) (dto.CityDatasDto, error) {
+	var citydata dto.CityDatasDto
+	citydata, err := cdi.Repository.GetMonthlyPrefRanking(cityDataParam)
+	if err != nil {
+		return dto.CityDatasDto{}, err
+	}
+	return citydata, nil
+}
