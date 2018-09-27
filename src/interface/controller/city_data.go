@@ -3,7 +3,7 @@ package controller
 import (
 	"net/http"
 	"residential_map_api/src/interface/gateway"
-	"residential_map_api/src/usecase/dto"
+	"residential_map_api/src/usecase/dto/param"
 	"residential_map_api/src/usecase/interactor"
 
 	"github.com/k0kubun/pp"
@@ -24,7 +24,7 @@ func NewCityDataController(sqlHandler gateway.SqlHandler) *CityDataController {
 }
 
 func (cd *CityDataController) GetCityDataByCityId(c Context) error {
-	cityDataParam := new(dto.CityDataParamDto)
+	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
 		return c.JSON(404, err)
@@ -39,7 +39,7 @@ func (cd *CityDataController) GetCityDataByCityId(c Context) error {
 }
 
 func (cd *CityDataController) GetCityDataByPrefId(c Context) error {
-	cityDataParam := new(dto.CityDataParamDto)
+	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
 		return c.JSON(404, err)
@@ -54,7 +54,7 @@ func (cd *CityDataController) GetCityDataByPrefId(c Context) error {
 }
 
 func (cd *CityDataController) GetCityDataRanking(c Context) error {
-	cityDataParam := new(dto.CityDataParamDto)
+	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
 		return c.JSON(404, err)
@@ -68,7 +68,7 @@ func (cd *CityDataController) GetCityDataRanking(c Context) error {
 }
 
 func (cd *CityDataController) GetPrefDataRanking(c Context) error {
-	cityDataParam := new(dto.CityDataParamDto)
+	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
 		return c.JSON(404, err)

@@ -1,4 +1,4 @@
-package dto
+package param
 
 type CityDataParamDto struct {
 	//{TODO} ここでstringを受けていることろをbindする際にunmarshalする

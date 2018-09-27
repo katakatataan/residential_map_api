@@ -1,4 +1,4 @@
-package entity
+package dto
 
 import null "gopkg.in/guregu/null.v3"
 
