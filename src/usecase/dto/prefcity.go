@@ -1,4 +1,4 @@
-package entity
+package dto
 
 type PrefCity struct {
 	Id       int64   `db:"id" json:"id"`

@@ -1,7 +1,7 @@
 package interactor
 
 import (
-	"residential_map_api/src/entity"
+	"residential_map_api/src/usecase/dto"
 	"residential_map_api/src/usecase/repository"
 )
 
@@ -9,11 +9,11 @@ type MstPrefCityInteractor struct {
 	Repository repository.MstPrefCityRepository
 }
 
-func (mpci *MstPrefCityInteractor) FetchAllPrefCities() (entity.PrefCities, error) {
-	var prefcities entity.PrefCities
+func (mpci *MstPrefCityInteractor) FetchAllPrefCities() (dto.PrefCities, error) {
+	var prefcities dto.PrefCities
 	prefcities, err := mpci.Repository.FindAll()
 	if err != nil {
-		return entity.PrefCities{}, err
+		return dto.PrefCities{}, err
 	}
 	return prefcities, nil
 }
