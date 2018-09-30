@@ -24,7 +24,8 @@ func Run(e *echo.Echo) {
 	e.Use(middleware.Recover())
 	// Validator
 	e.Validator = NewValidator()
-	e.Binder = NewBinder()
+	// custombindがいい感じに実装できたらコメントアウト解除
+	// e.Binder = NewBinder()
 	routeForDebug(e)
 	routeForAuthRequired(e.Group("/restricted"))
 
