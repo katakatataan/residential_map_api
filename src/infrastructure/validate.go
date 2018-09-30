@@ -16,7 +16,7 @@ func NewValidator() echo.Validator {
 }
 
 func (cv *CustomValidator) Validate(i interface{}) error {
-	cv.Validator.RegisterValidation("canbetime", CanBeTime)
+	// cv.Validator.RegisterValidation("canbetime", CanBeTime)
 	return cv.Validator.Struct(i)
 }
 
