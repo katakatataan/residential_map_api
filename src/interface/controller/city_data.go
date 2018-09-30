@@ -27,11 +27,12 @@ func (cd *CityDataController) GetCityDataByCityId(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
+		pp.Println(cityDataParam)
 		return c.JSON(404, err)
 	}
+	pp.Println(cityDataParam)
 	err = c.Validate(cityDataParam)
 	if err != nil {
-		pp.Println(err)
 		return c.JSON(404, err)
 	}
 	result, err := cd.Interactor.FetchCityDatasById(cityDataParam)
@@ -46,7 +47,6 @@ func (cd *CityDataController) GetCityDataByPrefId(c Context) error {
 	}
 	err = c.Validate(cityDataParam)
 	if err != nil {
-		pp.Println(err)
 		return c.JSON(404, err)
 	}
 	result, err := cd.Interactor.FetchCityDatasByPrefId(cityDataParam)
