@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/dto/param"
@@ -27,12 +28,14 @@ func (cd *CityDataController) GetCityDataByCityId(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
+		fmt.Println("bind error")
 		pp.Println(cityDataParam)
 		return c.JSON(404, err)
 	}
-	pp.Println(cityDataParam)
+	fmt.Println("before validate")
 	err = c.Validate(cityDataParam)
 	if err != nil {
+		fmt.Println("validate error")
 		return c.JSON(404, err)
 	}
 	result, err := cd.Interactor.FetchCityDatasById(cityDataParam)
