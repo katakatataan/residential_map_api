@@ -8,7 +8,6 @@ import (
 	"github.com/labstack/echo/middleware"
 	_ "github.com/lib/pq"
 	"github.com/sevenNt/echo-pprof"
-	"gopkg.in/go-playground/validator.v9"
 )
 
 type jwtCustomClaims struct {
@@ -17,19 +16,15 @@ type jwtCustomClaims struct {
 	jwt.StandardClaims
 }
 
-type CustomValidator struct {
-	validator *validator.Validate
-}
-
 func Run(e *echo.Echo) {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	// Validator
-	v := validator.New()
-	v.RegisterValidation("can-be-time", ValidateTimeString)
+	// v := validator.New()
+	// v.RegisterValidation("can-be-time", ValidateTimeString)
 
-	e.Validator = &CustomValidator{validator: v}
+	e.Validator = NewValidator()
 	// custombindがいい感じに実装できたらコメントアウト解除
 	// e.Binder = NewBinder()
 	routeForDebug(e)

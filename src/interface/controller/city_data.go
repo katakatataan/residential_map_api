@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/dto/param"
@@ -35,15 +34,12 @@ func (cd *cityDataController) GetCityDataByCityId(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
-		fmt.Println("bind error")
 		pp.Println(cityDataParam)
-		return c.JSON(404, err)
+		return c.JSON(400, err)
 	}
-	fmt.Println("before validate")
 	err = c.Validate(cityDataParam)
 	if err != nil {
-		fmt.Println("validate error")
-		return c.JSON(404, err)
+		return c.JSON(400, err)
 	}
 	result, err := cd.Interactor.FetchCityDatasById(cityDataParam)
 	return c.JSON(http.StatusOK, result)
@@ -53,11 +49,11 @@ func (cd *cityDataController) GetCityDataByPrefId(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
-		return c.JSON(404, err)
+		return c.JSON(400, err)
 	}
 	err = c.Validate(cityDataParam)
 	if err != nil {
-		return c.JSON(404, err)
+		return c.JSON(400, err)
 	}
 	result, err := cd.Interactor.FetchCityDatasByPrefId(cityDataParam)
 	return c.JSON(http.StatusOK, result)
@@ -67,11 +63,11 @@ func (cd *cityDataController) GetCityDataRanking(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
-		return c.JSON(404, err)
+		return c.JSON(400, err)
 	}
 	err = c.Validate(cityDataParam)
 	if err != nil {
-		return c.JSON(404, err)
+		return c.JSON(400, err)
 	}
 	result, err := cd.Interactor.GetCityDataRanking(cityDataParam)
 	return c.JSON(http.StatusOK, result)
@@ -81,11 +77,11 @@ func (cd *cityDataController) GetPrefDataRanking(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
-		return c.JSON(404, err)
+		return c.JSON(400, err)
 	}
 	err = c.Validate(cityDataParam)
 	if err != nil {
-		return c.JSON(404, err)
+		return c.JSON(400, err)
 	}
 	result, err := cd.Interactor.GetPrefDataRanking(cityDataParam)
 	return c.JSON(http.StatusOK, result)
