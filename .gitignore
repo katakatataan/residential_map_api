@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
+.envrc
 build/
 develop-eggs/
 dist/
@@ -24,8 +25,10 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+
 cloud_sql_proxy/
 src/gin-bin/
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

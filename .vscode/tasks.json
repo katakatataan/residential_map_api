@@ -1,0 +1,22 @@
+{
+  "version": "0.1.0",
+  "command": "bash",
+  "isShellCommand": true,
+  "showOutput": "always",
+  "options": {
+    "cwd": "${workspaceRoot}"
+  },
+  "args": [
+    "-c"
+  ],
+  "tasks": [
+    {
+      "taskName": "start",
+      "suppressTaskName": true,
+      "isBuildCommand": true,
+      "args": [
+        "make gin-run"
+      ]
+    },
+  ]
+}

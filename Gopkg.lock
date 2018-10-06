@@ -8,10 +8,28 @@
   version = "v3.2.0"
 
 [[projects]]
+  name = "github.com/go-playground/locales"
+  packages = [".","currency"]
+  revision = "f63010822830b6fe52288ee52d5a1151088ce039"
+  version = "v0.12.1"
+
+[[projects]]
+  name = "github.com/go-playground/universal-translator"
+  packages = ["."]
+  revision = "b32fa301c9fe55953584134cb6853a13c87ec0a1"
+  version = "v0.16.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/jmoiron/sqlx"
   packages = [".","reflectx"]
   revision = "0dae4fefe7c0e190f7b5a78dac28a1c82cc8d849"
+
+[[projects]]
+  name = "github.com/k0kubun/pp"
+  packages = ["."]
+  revision = "027a6d1765d673d337e687394dbe780dd64e2a1e"
+  version = "v2.3.0"
 
 [[projects]]
   name = "github.com/labstack/echo"
@@ -44,6 +62,12 @@
   version = "v0.0.3"
 
 [[projects]]
+  name = "github.com/paulmach/go.geojson"
+  packages = ["."]
+  revision = "a5c451da2d9c67c590ae6be92565b67698286a1a"
+  version = "v1.4"
+
+[[projects]]
   name = "github.com/sevenNt/echo-pprof"
   packages = ["."]
   revision = "8bdaf794e4583c013a089f3902aa140d45a5af1c"
@@ -73,9 +97,21 @@
   packages = ["unix"]
   revision = "4ea2f632f6e912459fe60b26b1749377f0d889d5"
 
+[[projects]]
+  name = "gopkg.in/go-playground/validator.v9"
+  packages = ["."]
+  revision = "e69e9a28bb62b977fdc58d051f1bb477b7cbe486"
+  version = "v9.21.0"
+
+[[projects]]
+  name = "gopkg.in/guregu/null.v3"
+  packages = ["."]
+  revision = "80515d440932108546bcade467bb7d6968e812e2"
+  version = "v3.4.0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "88fe4fdb9ca8f80eaa89fee6b6ebc294ce9fad96ac4b5fd28ab447724534e439"
+  inputs-digest = "95f46e29691c1f6e0dd9513ffaf07932710ecbf8bacc4893e5471634c7bd7127"
   solver-name = "gps-cdcl"
   solver-version = 1
