@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -12,7 +13,8 @@ type SqlHandler struct {
 }
 
 func NewSqlHandler() SqlHandler {
-	conn, err := sqlx.Connect("postgres", "user=residential-map password=residential-map dbname=residential host=127.0.0.1 port=5432 sslmode=disable")
+
+	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=127.0.0.1 port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME")))
 	if err != nil {
 		fmt.Println("connection error")
 	}
