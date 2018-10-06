@@ -1,24 +1,29 @@
 package infrastructure
 
 import (
-	"github.com/labstack/echo"
+	"time"
+
 	"gopkg.in/go-playground/validator.v9"
 )
 
+const timeFormat = "2006-01-02"
+
 type CustomValidator struct {
-	Validator *validator.Validate
+	validator *validator.Validate
 }
 
-func NewValidator() echo.Validator {
-	return &CustomValidator{Validator: validator.New()}
+func NewValidator() *CustomValidator {
+	return &CustomValidator{validator: validator.New()}
 }
 
 func (cv *CustomValidator) Validate(i interface{}) error {
-	// validate項目に"BuildDate"タグを追加
-	cv.Validator.RegisterValidation("BuildDate", DateValidator)
-	return cv.Validator.Struct(i)
+	cv.validator.RegisterValidation("can-be-time", ValidateTimeString)
+	return cv.validator.Struct(i)
 }
-
-func DateValidator(fl validator.FieldLevel) bool {
-	return fl.Field().String() == "test"
+func ValidateTimeString(fl validator.FieldLevel) bool {
+	t, err := time.Parse(timeFormat, fl.Field().String())
+	if err != nil && t.Unix() < 0 {
+		return false
+	}
+	return true
 }

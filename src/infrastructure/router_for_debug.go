@@ -8,7 +8,6 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/k0kubun/pp"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/paulmach/go.geojson"
@@ -18,6 +17,10 @@ func routeForDebug(e *echo.Echo) {
 	e.Use(middleware.BodyDump(func(c echo.Context, reqBody, resBody []byte) {
 		// 認証をつけル時のデバッグ用に作成
 		fmt.Printf("%s\n", reqBody)
+	}))
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{echo.GET, echo.PUT, echo.POST, echo.DELETE},
 	}))
 	e.GET("/geo", func(c echo.Context) error {
 		res, err := http.Get("https://storage.googleapis.com/analyze-residential.appspot.com/geo_optimize/201801-1.geojson")
@@ -38,7 +41,6 @@ func routeForDebug(e *echo.Echo) {
 		for k, _ := range fc2.Features {
 			fc.AddFeature(fc2.Features[k])
 		}
-		pp.Println(fc)
 		return c.JSON(200, fc)
 	})
 	e.GET("/request", func(c echo.Context) error {
