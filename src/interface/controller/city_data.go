@@ -2,17 +2,22 @@ package controller
 
 import (
 	"net/http"
+	"residential_map_api/src/entity/param"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/interactor"
+
+	"github.com/k0kubun/pp"
 )
+
+type CityDataController interface {
+	GetCityDataByCityId(c Context) error
+	GetCityDataByPrefId(c Context) error
+	GetCityDataRanking(c Context) error
+	GetPrefDataRanking(c Context) error
+}
 
 type cityDataController struct {
 	Interactor interactor.CityDataInteractor
-}
-
-type CityDataController interface {
-	GetCityDataByBuildDate(c Context) error
-	GetCityData(c Context) error
 }
 
 func NewCityDataController(sqlHandler gateway.SqlHandler) *cityDataController {
@@ -25,18 +30,59 @@ func NewCityDataController(sqlHandler gateway.SqlHandler) *cityDataController {
 	}
 }
 
-func (cd *cityDataController) GetCityDataByBuildDate(c Context) error {
-	result, err := cd.Interactor.FetchCityDatasByBuildDate()
+func (cd *cityDataController) GetCityDataByCityId(c Context) error {
+	cityDataParam := new(param.CityDataParamDto)
+	err := c.Bind(cityDataParam)
 	if err != nil {
-		return err
+		pp.Println(cityDataParam)
+		return c.JSON(400, err)
 	}
+	err = c.Validate(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	result, err := cd.Interactor.FetchCityDatasById(cityDataParam)
 	return c.JSON(http.StatusOK, result)
 }
 
-func (cd *cityDataController) GetCityData(c Context) error {
-	result, err := cd.Interactor.FetchAllCityData()
+func (cd *cityDataController) GetCityDataByPrefId(c Context) error {
+	cityDataParam := new(param.CityDataParamDto)
+	err := c.Bind(cityDataParam)
 	if err != nil {
-		return err
+		return c.JSON(400, err)
 	}
+	err = c.Validate(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	result, err := cd.Interactor.FetchCityDatasByPrefId(cityDataParam)
+	return c.JSON(http.StatusOK, result)
+}
+
+func (cd *cityDataController) GetCityDataRanking(c Context) error {
+	cityDataParam := new(param.CityDataParamDto)
+	err := c.Bind(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	err = c.Validate(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	result, err := cd.Interactor.GetCityDataRanking(cityDataParam)
+	return c.JSON(http.StatusOK, result)
+}
+
+func (cd *cityDataController) GetPrefDataRanking(c Context) error {
+	cityDataParam := new(param.CityDataParamDto)
+	err := c.Bind(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	err = c.Validate(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	result, err := cd.Interactor.GetPrefDataRanking(cityDataParam)
 	return c.JSON(http.StatusOK, result)
 }
