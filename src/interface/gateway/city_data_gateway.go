@@ -3,8 +3,6 @@ package gateway
 import (
 	"residential_map_api/src/usecase/dto"
 	"residential_map_api/src/usecase/dto/param"
-
-	"github.com/k0kubun/pp"
 )
 
 type CityDataGateway struct {
@@ -23,7 +21,6 @@ func (cdg *CityDataGateway) FindAll() (dto.CityDatas, error) {
 
 func (cdg *CityDataGateway) FindByCityId(cityDataParam *param.CityDataParamDto) (dto.CityDatas, error) {
 	var cityDatas dto.CityDatas
-	pp.Println(cityDataParam)
 	err := cdg.Find(&cityDatas, "SELECT * FROM city_data WHERE city_id = $1 AND build_date >= $2 AND build_date < $3", cityDataParam.CityId, cityDataParam.From, cityDataParam.To)
 	if err != nil {
 		return dto.CityDatas{}, err

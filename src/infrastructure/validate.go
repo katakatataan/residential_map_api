@@ -3,7 +3,6 @@ package infrastructure
 import (
 	"time"
 
-	"github.com/k0kubun/pp"
 	"gopkg.in/go-playground/validator.v9"
 )
 
@@ -22,10 +21,7 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 	return cv.validator.Struct(i)
 }
 func ValidateTimeString(fl validator.FieldLevel) bool {
-	pp.Println(fl.Field().String())
 	t, err := time.Parse(timeFormat, fl.Field().String())
-	pp.Println(t)
-	pp.Println(t.Unix())
 	if err != nil && t.Unix() < 0 {
 		return false
 	}
