@@ -1,8 +1,6 @@
 package gateway
 
-import (
-	"residential_map_api/src/entity"
-)
+import "residential_map_api/src/entity"
 
 type MstPrefCityGateway struct {
 	SqlHandler
