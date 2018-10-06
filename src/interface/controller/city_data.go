@@ -10,12 +10,19 @@ import (
 	"github.com/k0kubun/pp"
 )
 
-type CityDataController struct {
+type CityDataController interface {
+	GetCityDataByCityId(c Context) error
+	GetCityDataByPrefId(c Context) error
+	GetCityDataRanking(c Context) error
+	GetPrefDataRanking(c Context) error
+}
+
+type cityDataController struct {
 	Interactor interactor.CityDataInteractor
 }
 
-func NewCityDataController(sqlHandler gateway.SqlHandler) *CityDataController {
-	return &CityDataController{
+func NewCityDataController(sqlHandler gateway.SqlHandler) *cityDataController {
+	return &cityDataController{
 		Interactor: interactor.CityDataInteractor{
 			Repository: &gateway.CityDataGateway{
 				SqlHandler: sqlHandler,
@@ -24,7 +31,7 @@ func NewCityDataController(sqlHandler gateway.SqlHandler) *CityDataController {
 	}
 }
 
-func (cd *CityDataController) GetCityDataByCityId(c Context) error {
+func (cd *cityDataController) GetCityDataByCityId(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
@@ -42,7 +49,7 @@ func (cd *CityDataController) GetCityDataByCityId(c Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
-func (cd *CityDataController) GetCityDataByPrefId(c Context) error {
+func (cd *cityDataController) GetCityDataByPrefId(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
@@ -56,7 +63,7 @@ func (cd *CityDataController) GetCityDataByPrefId(c Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
-func (cd *CityDataController) GetCityDataRanking(c Context) error {
+func (cd *cityDataController) GetCityDataRanking(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
@@ -70,7 +77,7 @@ func (cd *CityDataController) GetCityDataRanking(c Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
-func (cd *CityDataController) GetPrefDataRanking(c Context) error {
+func (cd *cityDataController) GetPrefDataRanking(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
