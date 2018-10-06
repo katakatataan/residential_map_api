@@ -1,6 +1,9 @@
 package infrastructure
 
 import (
+	"time"
+
+	"github.com/k0kubun/pp"
 	"github.com/labstack/echo"
 	"gopkg.in/go-playground/validator.v9"
 )
@@ -16,16 +19,16 @@ func NewValidator() echo.Validator {
 }
 
 func (cv *CustomValidator) Validate(i interface{}) error {
-	// cv.Validator.RegisterValidation("canbetime", CanBeTime)
+	cv.Validator.RegisterValidation("canbetime", CanBeTime)
 	return cv.Validator.Struct(i)
 }
 
 func CanBeTime(fl validator.FieldLevel) bool {
-	// pp.Println(fl.Field().String())
-	// t, err := time.Parse(timeFormat, fl.Field().String())
-	// pp.Println(t)
-	// if err != nil {
-	// 	return true
-	// }
+	pp.Println(fl.Field().String())
+	t, err := time.Parse(timeFormat, fl.Field().String())
+	pp.Println(t)
+	if err != nil {
+		return true
+	}
 	return true
 }
