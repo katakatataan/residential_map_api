@@ -1,14 +1,14 @@
 package repository
 
 import (
-	"residential_map_api/src/usecase/dto"
-	"residential_map_api/src/usecase/dto/param"
+	"residential_map_api/src/entity"
+	"residential_map_api/src/entity/param"
 )
 
 type CityDataRepository interface {
-	FindAll() (dto.CityDatas, error)
-	FindByCityId(*param.CityDataParamDto) (dto.CityDatas, error)
-	FindByPrefId(*param.CityDataParamDto) (dto.CityDatas, error)
-	GetMonthlyCityRanking(*param.CityDataParamDto) (dto.CityDatasDto, error)
-	GetMonthlyPrefRanking(*param.CityDataParamDto) (dto.CityDatasDto, error)
+	FindAll() (entity.CityDatas, error)
+	FindByCityId(*param.CityDataParamDto) (entity.CityDatas, error)
+	FindByPrefId(*param.CityDataParamDto) (entity.CityDatas, error)
+	GetMonthlyCityRanking(*param.CityDataParamDto) (entity.CityDatasDto, error)
+	GetMonthlyPrefRanking(*param.CityDataParamDto) (entity.CityDatasDto, error)
 }

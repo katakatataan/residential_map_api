@@ -2,8 +2,8 @@ package controller
 
 import (
 	"net/http"
+	"residential_map_api/src/entity/param"
 	"residential_map_api/src/interface/gateway"
-	"residential_map_api/src/usecase/dto/param"
 	"residential_map_api/src/usecase/interactor"
 
 	"github.com/k0kubun/pp"

@@ -1,9 +1,7 @@
 package repository
 
-import (
-	"residential_map_api/src/usecase/dto"
-)
+import "residential_map_api/src/entity"
 
 type MstPrefCityRepository interface {
-	FindAll() (dto.PrefCities, error)
+	FindAll() (entity.PrefCities, error)
 }
