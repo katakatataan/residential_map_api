@@ -21,11 +21,9 @@ func Run(e *echo.Echo) {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	// Validator
-	// v := validator.New()
-	// v.RegisterValidation("can-be-time", ValidateTimeString)
-
 	e.Validator = NewValidator()
-	// custombindがいい感じに実装できたらコメントアウト解除
+
+	// Bind
 	// e.Binder = NewBinder()
 	routeForDebug(e)
 	routeForAuthRequired(e.Group("/restricted"))
