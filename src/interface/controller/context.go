@@ -9,4 +9,6 @@ type Context interface {
 	// Validate validates provided `i`. It is usually called after `Context#Bind()`.
 	// Validator must be registered using `Echo#Validator`.
 	Validate(i interface{}) error
+	// Param handles request parameter.
+	Param(string) string
 }

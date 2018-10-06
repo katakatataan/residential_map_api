@@ -1,0 +1,21 @@
+POST https://example.com/comments HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}
+
+### 2018年1月から2018年7月までの単月の市区町村の集計結果
+GET http://localhost:2000/citydata?from=2018-01-01&to=2018-07-01&city_id=13101
+### 2018年1月から2018年7月までの単月の都道府県の集計結果
+GET http://localhost:2000/prefdata?pref_id=13&from=2018-01-01&to=2018-07-01
+### 2018年一月の東京都の市区町村を着工戸数でランキング出力
+GET http://localhost:2000/monthlycitydatarank?pref_id=13&from=2018-01-01&to=2018-02-01
+### 2018年一月の全国の着工戸数でランキング出力
+GET http://localhost:2000/monthlyprefdatarank?from=2018-01-01&to=2018-02-01
+### 市区町村マスタ
+GET http://localhost:2000/mst_prefcities （編集済み）
+
+###  validation error
+GET http://localhost:2000/citydata?from=201--01&to=2018-07-01&city_id=13101

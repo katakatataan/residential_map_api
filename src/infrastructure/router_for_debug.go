@@ -8,7 +8,6 @@ import (
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/k0kubun/pp"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/paulmach/go.geojson"
@@ -42,7 +41,6 @@ func routeForDebug(e *echo.Echo) {
 		for k, _ := range fc2.Features {
 			fc.AddFeature(fc2.Features[k])
 		}
-		pp.Println(fc)
 		return c.JSON(200, fc)
 	})
 	e.GET("/request", func(c echo.Context) error {
