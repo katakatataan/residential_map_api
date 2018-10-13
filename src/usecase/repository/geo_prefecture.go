@@ -1,7 +1,10 @@
 package repository
 
-import "residential_map_api/src/entity"
+import (
+	"residential_map_api/src/entity"
+	"residential_map_api/src/entity/param"
+)
 
 type GeoPrefectureRepository interface {
-	FindByPrefId(pids []int) (entity.FeatureCollection, error)
+	FindByPrefId(*param.GeoPrefectureDto) ([]entity.MstPrefectureGeojson, error)
 }
