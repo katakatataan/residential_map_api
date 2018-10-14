@@ -15,7 +15,10 @@ GET http://localhost:2000/monthlycitydatarank?pref_id=13&from=2018-01-01&to=2018
 ### 2018年一月の全国の着工戸数でランキング出力
 GET http://localhost:2000/monthlyprefdatarank?from=2018-01-01&to=2018-02-01
 ### 市区町村マスタ
-GET http://localhost:2000/mst_prefcities （編集済み）
+GET http://localhost:2000/mst_prefcities
 
 ###  validation error
 GET http://localhost:2000/citydata?from=201--01&to=2018-07-01&city_id=13101
+
+### geojsonの取得
+GET http://localhost:2000/geopref?pref_id=13&pref_id=14&weight=0.000001

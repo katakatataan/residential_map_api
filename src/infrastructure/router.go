@@ -31,7 +31,7 @@ func Run(e *echo.Echo) {
 	sqlHandler := NewSqlHandler()
 	mstPrefCityController := controller.NewMstPrefCityController(&sqlHandler)
 	cityDataController := controller.NewCityDataController(&sqlHandler)
-
+	geoPrefectureController := controller.NewGeoPrefectureController(&sqlHandler)
 	e.GET("/mst_prefcities", func(c echo.Context) error {
 		return mstPrefCityController.GetMstPrefCity(c)
 	})
@@ -51,6 +51,10 @@ func Run(e *echo.Echo) {
 	e.GET("/monthlyprefdatarank", func(c echo.Context) error {
 		return cityDataController.GetPrefDataRanking(c)
 	})
+	e.GET("/geopref", func(c echo.Context) error {
+		return geoPrefectureController.GeoPlainPrefecture(c)
+	})
+
 	echopprof.Wrap(e)
 	// e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))
 	e.Logger.Fatal(e.Start(":1323"))
