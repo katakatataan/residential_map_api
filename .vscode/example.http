@@ -9,7 +9,7 @@ content-type: application/json
 ### 2018年1月から2018年7月までの単月の市区町村の集計結果
 GET http://localhost:2000/citydata?from=2018-01-01&to=2018-07-01&city_id=13101
 ### 2018年1月から2018年7月までの単月の都道府県の集計結果
-GET http://localhost:2000/prefdata?pref_id=13&from=2018-01-01&to=2018-07-01
+GET http://localhost:2000/prefdata?pref_id=13&from=2017-01-01&to=2018-01-01
 ### 2018年一月の東京都の市区町村を着工戸数でランキング出力
 GET http://localhost:2000/monthlycitydatarank?pref_id=13&from=2018-01-01&to=2018-02-01
 ### 2018年一月の全国の着工戸数でランキング出力
