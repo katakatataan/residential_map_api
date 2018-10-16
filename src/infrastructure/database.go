@@ -57,3 +57,8 @@ func (h *SqlHandler) Update(query string, args ...interface{}) (interface{}, err
 	}
 	return result, nil
 }
+
+func (h *SqlHandler) In(query string, args ...interface{}) (string, []interface{}, error) {
+	q, vs, err := sqlx.In(query, args...)
+	return q, vs, err
+}
