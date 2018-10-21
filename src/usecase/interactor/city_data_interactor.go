@@ -21,7 +21,7 @@ func (cdi *CityDataInteractor) FetchAllCityData() (entity.CityDatas, error) {
 
 func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *param.CityDataParamDto) (entity.CityDatas, error) {
 	var citydata entity.CityDatas
-	citydata, err := cdi.Repository.FindByCityId(cityDataParam)
+	citydata, err := cdi.Repository.FindByCityId(cityDataParam.CityId, cityDataParam.Begin, cityDataParam.End)
 	if err != nil {
 		return entity.CityDatas{}, err
 	}
@@ -30,7 +30,7 @@ func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *param.CityDataP
 
 func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *param.CityDataParamDto) (entity.CityDatas, error) {
 	var citydata entity.CityDatas
-	citydata, err := cdi.Repository.FindByPrefId(cityDataParam)
+	citydata, err := cdi.Repository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
 	if err != nil {
 		return entity.CityDatas{}, err
 	}
@@ -39,7 +39,7 @@ func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *param.CityD
 
 func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *param.CityDataParamDto) (entity.CityDatasDto, error) {
 	var citydata entity.CityDatasDto
-	citydata, err := cdi.Repository.GetMonthlyCityRanking(cityDataParam)
+	citydata, err := cdi.Repository.GetMonthlyCityRanking(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
 	if err != nil {
 		return entity.CityDatasDto{}, err
 	}
@@ -48,7 +48,7 @@ func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *param.CityDataP
 
 func (cdi *CityDataInteractor) GetPrefDataRanking(cityDataParam *param.CityDataParamDto) (entity.CityDatasDto, error) {
 	var citydata entity.CityDatasDto
-	citydata, err := cdi.Repository.GetMonthlyPrefRanking(cityDataParam)
+	citydata, err := cdi.Repository.GetMonthlyPrefRanking(cityDataParam.Begin, cityDataParam.End)
 	if err != nil {
 		return entity.CityDatasDto{}, err
 	}
