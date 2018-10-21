@@ -5,6 +5,7 @@ import (
 	"residential_map_api/src/entity/response"
 	"residential_map_api/src/usecase/repository"
 
+	"github.com/k0kubun/pp"
 	geojson "github.com/paulmach/go.geojson"
 )
 
@@ -21,6 +22,7 @@ func (gpi *GeoPrefectureInteractor) FindByPrefId(geoPrefParam *param.GeoPrefectu
 			return response.ResGeojsonFeatureCollection{}, err
 		}
 		for _, v := range fc.Features {
+			pp.Println(v.Properties)
 			res.AddFeature(v)
 		}
 	}

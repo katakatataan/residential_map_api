@@ -10,6 +10,7 @@ type GeoPrefectureDto struct {
 	Weight  float64 `query:"weight" validate:"required"`
 }
 
+// TODO SQLインジェクションはほぼありえないけど、本質的な改修を行う
 func (geo *GeoPrefectureDto) ToCsvPrefIds() string {
 	var s []string
 	for _, v := range geo.PrefIds {
