@@ -1,0 +1,16 @@
+version: "3.3"
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass residential-map
+    networks:
+      - redis-net
+    volumes:
+      - redis-data:/data
+    restart: always
+networks:
+  redis-net:
+volumes:
+  redis-data:
