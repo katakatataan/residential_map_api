@@ -5,8 +5,6 @@ import (
 	"residential_map_api/src/entity/param"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/interactor"
-
-	"github.com/k0kubun/pp"
 )
 
 type CityDataController interface {
@@ -34,7 +32,6 @@ func (cd *cityDataController) GetCityDataByCityId(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
-		pp.Println(cityDataParam)
 		return c.JSON(400, err)
 	}
 	err = c.Validate(cityDataParam)
