@@ -20,7 +20,7 @@ func (cdg *CityDataGateway) FindAll() (entity.CityDatas, error) {
 
 func (cdg *CityDataGateway) FindByCityId(cityId int, begin string, end string) (entity.CityDatas, error) {
 	var cityDatas entity.CityDatas
-	err := cdg.Find(&cityDatas, "SELECT * FROM city_data WHERE city_id = $1 AND build_date >= $2 AND build_date < $3", cityId, begin, end)
+	err := cdg.Find(&cityDatas, "SELECT * FROM city_data WHERE city_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY city_id ASC, build_date ASC", cityId, begin, end)
 	if err != nil {
 		return entity.CityDatas{}, err
 	}
@@ -47,6 +47,7 @@ func (cdg *CityDataGateway) GetMonthlyCityRanking(prefId int, begin string, end 
 
 func (cdg *CityDataGateway) GetMonthlyPrefRanking(begin string, end string) (entity.CityDatasDto, error) {
 	var cityDatas entity.CityDatasDto
+	// TODO ここをviewで 対応する
 	err := cdg.Find(&cityDatas, "SELECT pref_name, SUM(built_count) as built_count, pref_id ,rank() over( partition by date_trunc('month', build_date) order by SUM(built_count) desc) as monthly_rank FROM city_data WHERE build_date >= $1 AND build_date < $2 AND pref_name IS NOT NULL group by pref_id, pref_name, date_trunc('month', build_date) ORDER BY date_trunc('month', build_date)", begin, end)
 	if err != nil {
 		return entity.CityDatasDto{}, err
