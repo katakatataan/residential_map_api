@@ -48,14 +48,13 @@ func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *param.CityD
 	return res, nil
 }
 
-func (cdi *CityDataInteractor) CompareCitiesInSamePrefecture(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatas, error) {
-	var citydata entity.CityDatas
-	res := response.ResStatisticsCityDatas{
+func (cdi *CityDataInteractor) CompareCitiesInSamePrefecture(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasBuildCountInSamePrefecture, error) {
+	citydata, err := cdi.CityDataRepository.CompareCitiesInSamePrefecture(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+	res := response.ResStatisticsCityDatasBuildCountInSamePrefecture{
 		Data: citydata,
 	}
-	citydata, err := cdi.CityDataRepository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
 	if err != nil {
-		return response.ResStatisticsCityDatas{}, err
+		return response.ResStatisticsCityDatasBuildCountInSamePrefecture{}, err
 	}
 	return res, nil
 }

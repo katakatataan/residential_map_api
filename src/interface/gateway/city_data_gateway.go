@@ -2,6 +2,8 @@ package gateway
 
 import (
 	"residential_map_api/src/entity"
+
+	"github.com/k0kubun/pp"
 )
 
 type CityDataGateway struct {
@@ -34,6 +36,19 @@ func (cdg *CityDataGateway) FindByPrefId(prefId int, begin string, end string) (
 		return entity.CityDatas{}, err
 	}
 	return cityDatas, nil
+}
+
+func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin string, end string) (map[string]interface{}, error) {
+	rows, err := cdg.Queryx("SELECT pref_id, pref_name, SUM(built_count) as built_count, SUM(total_square_meter) AS total_square_meter,  date_trunc('month', build_date) as build_date FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 GROUP BY pref_id, pref_name,  build_date ORDER BY  build_date ASC", prefId, begin, end)
+	results := make(map[string]interface{})
+	for rows.Next() {
+		err = rows.MapScan(results)
+		pp.Println(results)
+	}
+	if err != nil {
+		return map[string]interface{}{}, err
+	}
+	return results, nil
 }
 
 func (cdg *CityDataGateway) GetMonthlyCityRankingOfBuildCount(prefId int, begin string, end string) (entity.CityDatasBuildCountRanking, error) {

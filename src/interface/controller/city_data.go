@@ -72,3 +72,17 @@ func (cd *cityDataController) GetCityDataRanking(c Context) error {
 	result, err := cd.Interactor.GetCityDataRanking(cityDataParam)
 	return c.JSON(http.StatusOK, result)
 }
+
+func (cd *cityDataController) GetCityDataInSamePrefecture(c Context) error {
+	cityDataParam := new(param.CityDataParamDto)
+	err := c.Bind(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	err = c.Validate(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	result, err := cd.Interactor.CompareCitiesInSamePrefecture(cityDataParam)
+	return c.JSON(http.StatusOK, result)
+}
