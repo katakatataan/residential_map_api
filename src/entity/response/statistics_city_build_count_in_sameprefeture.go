@@ -3,7 +3,8 @@ package response
 import null "gopkg.in/guregu/null.v3"
 
 type ResStatisticsCityDatasBuildCountInSamePrefecture struct {
-	Data ResStatisticsCityDatasBuildCountInSamePrefectureData `json:"data"`
+	// TODO ここを修正
+	Data interface{} `json:"data"`
 }
 type ResStatisticsCityDatasBuildCountInSamePrefectureData struct {
 	ResStatisticsCityDatasBuildCountInSamePrefectureCommon
