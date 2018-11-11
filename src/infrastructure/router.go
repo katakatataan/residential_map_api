@@ -1,8 +1,6 @@
 package infrastructure
 
 import (
-	"residential_map_api/src/interface/controller"
-
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -25,35 +23,19 @@ func Run(e *echo.Echo) {
 
 	// Bind
 	// e.Binder = NewBinder()
+
+	// 都道府県ごとのマップ情報 => geojson/pref
+	// 市区町村ごとのマップ情報 => geojson/city?city_id=xx
+	// 都道府県ごとの統計情報（棒グラフ） => statistics/pref
+	// 市区町村ごとの統計情報（棒グラフ） => statistics/city?pref_id=xx
+	// 都道府県ごとの市区町村情報（チェックボックスの文言） => cities?pref_id=xx
+	// 月ごとの住宅着工数 => monthly?pref_id=xx&start_month=yy&end_month=zz
+	sqlHandler := NewSqlHandler()
 	routeForDebug(e)
 	routeForAuthRequired(e.Group("/restricted"))
-
-	sqlHandler := NewSqlHandler()
-	mstPrefCityController := controller.NewMstPrefCityController(&sqlHandler)
-	cityDataController := controller.NewCityDataController(&sqlHandler)
-	geoPrefectureController := controller.NewGeoPrefectureController(&sqlHandler)
-	e.GET("/mst_prefcities", func(c echo.Context) error {
-		return mstPrefCityController.GetMstPrefCity(c)
-	})
-
-	e.GET("/citydata", func(c echo.Context) error {
-		return cityDataController.GetCityDataByCityId(c)
-	})
-
-	e.GET("/prefdata", func(c echo.Context) error {
-		return cityDataController.GetCityDataByPrefId(c)
-	})
-
-	e.GET("/monthlycitydatarank", func(c echo.Context) error {
-		return cityDataController.GetCityDataRanking(c)
-	})
-
-	e.GET("/monthlyprefdatarank", func(c echo.Context) error {
-		return cityDataController.GetPrefDataRanking(c)
-	})
-	e.GET("/geopref", func(c echo.Context) error {
-		return geoPrefectureController.GeoPlainPrefecture(c)
-	})
+	routeForMaster(e.Group("/master"), sqlHandler)
+	routeForGeojson(e.Group("/geojson"), sqlHandler)
+	routeForStatistics(e.Group("/statistics"), sqlHandler)
 
 	echopprof.Wrap(e)
 	// e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))

@@ -10,6 +10,7 @@ import (
 
 func routeForAuthRequired(g *echo.Group) {
 	// Configure middleware with the custom claims type
+	//
 	config := middleware.JWTConfig{
 		Claims:     &jwtCustomClaims{},
 		SigningKey: []byte("secret"),
