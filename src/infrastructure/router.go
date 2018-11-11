@@ -23,13 +23,6 @@ func Run(e *echo.Echo) {
 
 	// Bind
 	// e.Binder = NewBinder()
-
-	// 都道府県ごとのマップ情報 => geojson/pref
-	// 市区町村ごとのマップ情報 => geojson/city?city_id=xx
-	// 都道府県ごとの統計情報（棒グラフ） => statistics/pref
-	// 市区町村ごとの統計情報（棒グラフ） => statistics/city?pref_id=xx
-	// 都道府県ごとの市区町村情報（チェックボックスの文言） => cities?pref_id=xx
-	// 月ごとの住宅着工数 => monthly?pref_id=xx&start_month=yy&end_month=zz
 	sqlHandler := NewSqlHandler()
 	routeForDebug(e)
 	routeForAuthRequired(e.Group("/restricted"))

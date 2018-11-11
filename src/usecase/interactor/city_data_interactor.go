@@ -48,6 +48,18 @@ func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *param.CityD
 	return res, nil
 }
 
+func (cdi *CityDataInteractor) CompareCitiesInSamePrefecture(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatas, error) {
+	var citydata entity.CityDatas
+	res := response.ResStatisticsCityDatas{
+		Data: citydata,
+	}
+	citydata, err := cdi.CityDataRepository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+	if err != nil {
+		return response.ResStatisticsCityDatas{}, err
+	}
+	return res, nil
+}
+
 func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasBuildCountRanking, error) {
 	var citydata entity.CityDatasBuildCountRanking
 	citydata, err := cdi.CityDataRankingRepository.GetMonthlyCityRankingOfBuildCount(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
