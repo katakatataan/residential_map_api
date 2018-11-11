@@ -53,6 +53,7 @@ func (cdi *CityDataInteractor) CompareCitiesInSamePrefecture(cityDataParam *para
 	res := response.ResStatisticsCityDatasBuildCountInSamePrefecture{
 		Data: citydata,
 	}
+	// pp.Println(res)
 	if err != nil {
 		return response.ResStatisticsCityDatasBuildCountInSamePrefecture{}, err
 	}

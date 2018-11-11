@@ -5,10 +5,13 @@ import (
 	"residential_map_api/src/entity/param"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/interactor"
+
+	"github.com/k0kubun/pp"
 )
 
 type CityDataController interface {
 	GetCityDataByCityId(c Context) error
+	GetCityDataInSamePrefecture(c Context) error
 	GetCityDataByPrefId(c Context) error
 	GetCityDataRanking(c Context) error
 	GetPrefDataRanking(c Context) error
@@ -84,5 +87,6 @@ func (cd *cityDataController) GetCityDataInSamePrefecture(c Context) error {
 		return c.JSON(400, err)
 	}
 	result, err := cd.Interactor.CompareCitiesInSamePrefecture(cityDataParam)
+	pp.Println(result)
 	return c.JSON(http.StatusOK, result)
 }

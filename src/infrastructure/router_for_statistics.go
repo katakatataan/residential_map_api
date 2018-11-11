@@ -20,7 +20,7 @@ func routeForStatistics(g *echo.Group, sqlHandler SqlHandler) {
 	})
 
 	g.GET("/city/ranking/build_count/new", func(c echo.Context) error {
-		return controller.NewCityDataController(&sqlHandler).(c)
+		return controller.NewCityDataController(&sqlHandler).GetCityDataInSamePrefecture(c)
 	})
 
 	g.GET("/pref/ranking/build_count", func(c echo.Context) error {
