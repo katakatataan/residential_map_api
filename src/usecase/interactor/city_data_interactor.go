@@ -3,54 +3,59 @@ package interactor
 import (
 	"residential_map_api/src/entity"
 	"residential_map_api/src/entity/param"
+	"residential_map_api/src/entity/response"
 	"residential_map_api/src/usecase/repository"
 )
 
 type CityDataInteractor struct {
-	Repository repository.CityDataRepository
+	CityDataRepository        repository.CityDataRepository
+	CityDataRankingRepository repository.CityDataRankingRepository
 }
 
-func (cdi *CityDataInteractor) FetchAllCityData() (entity.CityDatas, error) {
+func (cdi *CityDataInteractor) FetchAllCityData() (response.ResStatisticsCityDatas, error) {
 	var citydata entity.CityDatas
-	citydata, err := cdi.Repository.FindAll()
-	if err != nil {
-		return entity.CityDatas{}, err
+	citydata, err := cdi.CityDataRepository.FindAll()
+	res := response.ResStatisticsCityDatas{
+		Data: citydata,
 	}
-	return citydata, nil
+	if err != nil {
+		return response.ResStatisticsCityDatas{}, err
+	}
+	return res, nil
 }
 
-func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *param.CityDataParamDto) (entity.CityDatas, error) {
+func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatas, error) {
 	var citydata entity.CityDatas
-	citydata, err := cdi.Repository.FindByCityId(cityDataParam.CityId, cityDataParam.Begin, cityDataParam.End)
-	if err != nil {
-		return entity.CityDatas{}, err
+	citydata, err := cdi.CityDataRepository.FindByCityId(cityDataParam.CityId, cityDataParam.Begin, cityDataParam.End)
+	res := response.ResStatisticsCityDatas{
+		Data: citydata,
 	}
-	return citydata, nil
+	if err != nil {
+		return response.ResStatisticsCityDatas{}, err
+	}
+	return res, nil
 }
 
-func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *param.CityDataParamDto) (entity.CityDatas, error) {
+func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatas, error) {
 	var citydata entity.CityDatas
-	citydata, err := cdi.Repository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
-	if err != nil {
-		return entity.CityDatas{}, err
+	res := response.ResStatisticsCityDatas{
+		Data: citydata,
 	}
-	return citydata, nil
+	citydata, err := cdi.CityDataRepository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+	if err != nil {
+		return response.ResStatisticsCityDatas{}, err
+	}
+	return res, nil
 }
 
-func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *param.CityDataParamDto) (entity.CityDatasDto, error) {
-	var citydata entity.CityDatasDto
-	citydata, err := cdi.Repository.GetMonthlyCityRankingOfBuildCount(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
-	if err != nil {
-		return entity.CityDatasDto{}, err
+func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasBuildCountRanking, error) {
+	var citydata entity.CityDatasBuildCountRanking
+	citydata, err := cdi.CityDataRankingRepository.GetMonthlyCityRankingOfBuildCount(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+	res := response.ResStatisticsCityDatasBuildCountRanking{
+		Data: citydata,
 	}
-	return citydata, nil
-}
-
-func (cdi *CityDataInteractor) GetPrefDataRanking(cityDataParam *param.CityDataParamDto) (entity.CityDatasDto, error) {
-	var citydata entity.CityDatasDto
-	citydata, err := cdi.Repository.GetMonthlyPrefRankingOfBuildCount(cityDataParam.Begin, cityDataParam.End)
 	if err != nil {
-		return entity.CityDatasDto{}, err
+		return response.ResStatisticsCityDatasBuildCountRanking{}, err
 	}
-	return citydata, nil
+	return res, nil
 }

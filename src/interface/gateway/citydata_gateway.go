@@ -36,21 +36,11 @@ func (cdg *CityDataGateway) FindByPrefId(prefId int, begin string, end string) (
 	return cityDatas, nil
 }
 
-func (cdg *CityDataGateway) GetMonthlyCityRankingOfBuildCount(prefId int, begin string, end string) (entity.CityDatasDto, error) {
-	var cityDatas entity.CityDatasDto
+func (cdg *CityDataGateway) GetMonthlyCityRankingOfBuildCount(prefId int, begin string, end string) (entity.CityDatasBuildCountRanking, error) {
+	var cityDatas entity.CityDatasBuildCountRanking
 	err := cdg.Find(&cityDatas, "SELECT  * ,rank() over( partition by date_trunc('month',build_date) order by built_count desc) as monthly_rank FROM city_data WHERE pref_id = $1 AND  build_date >= $2 AND build_date < $3  ORDER BY date_trunc('month', build_date)", prefId, begin, end)
 	if err != nil {
-		return entity.CityDatasDto{}, err
-	}
-	return cityDatas, nil
-}
-
-func (cdg *CityDataGateway) GetMonthlyPrefRankingOfBuildCount(begin string, end string) (entity.CityDatasDto, error) {
-	var cityDatas entity.CityDatasDto
-	// TODO ここをviewで 対応する
-	err := cdg.Find(&cityDatas, "SELECT pref_name, SUM(built_count) as built_count, pref_id ,rank() over( partition by date_trunc('month', build_date) order by SUM(built_count) desc) as monthly_rank FROM city_data WHERE build_date >= $1 AND build_date < $2 AND pref_name IS NOT NULL group by pref_id, pref_name, date_trunc('month', build_date) ORDER BY date_trunc('month', build_date)", begin, end)
-	if err != nil {
-		return entity.CityDatasDto{}, err
+		return entity.CityDatasBuildCountRanking{}, err
 	}
 	return cityDatas, nil
 }

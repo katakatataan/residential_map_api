@@ -1,8 +1,10 @@
 package entity
 
-import null "gopkg.in/guregu/null.v3"
+import (
+	null "gopkg.in/guregu/null.v3"
+)
 
-type CityDataDto struct {
+type CityDataBuildCountRanking struct {
 	Id                   int         `db:"id" json:"id"`
 	BuiltCount           int         `db:"built_count" json:"built_count"`
 	TotalSquareMeter     int         `db:"total_square_meter" json:"total_square_meter"`
@@ -21,4 +23,4 @@ type CityDataDto struct {
 	MontylyRank          int         `db:"monthly_rank" json:"monthly_rank"`
 }
 
-type CityDatasDto []CityDataDto
+type CityDatasBuildCountRanking []CityDataBuildCountRanking

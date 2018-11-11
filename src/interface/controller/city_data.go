@@ -21,7 +21,10 @@ type cityDataController struct {
 func NewCityDataController(sqlHandler gateway.SqlHandler) *cityDataController {
 	return &cityDataController{
 		Interactor: interactor.CityDataInteractor{
-			Repository: &gateway.CityDataGateway{
+			CityDataRepository: &gateway.CityDataGateway{
+				SqlHandler: sqlHandler,
+			},
+			CityDataRankingRepository: &gateway.CityDataGateway{
 				SqlHandler: sqlHandler,
 			},
 		},
@@ -67,19 +70,5 @@ func (cd *cityDataController) GetCityDataRanking(c Context) error {
 		return c.JSON(400, err)
 	}
 	result, err := cd.Interactor.GetCityDataRanking(cityDataParam)
-	return c.JSON(http.StatusOK, result)
-}
-
-func (cd *cityDataController) GetPrefDataRanking(c Context) error {
-	cityDataParam := new(param.CityDataParamDto)
-	err := c.Bind(cityDataParam)
-	if err != nil {
-		return c.JSON(400, err)
-	}
-	err = c.Validate(cityDataParam)
-	if err != nil {
-		return c.JSON(400, err)
-	}
-	result, err := cd.Interactor.GetPrefDataRanking(cityDataParam)
 	return c.JSON(http.StatusOK, result)
 }

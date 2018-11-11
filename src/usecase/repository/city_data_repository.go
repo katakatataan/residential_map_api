@@ -8,6 +8,4 @@ type CityDataRepository interface {
 	FindAll() (entity.CityDatas, error)
 	FindByCityId(cityId int, begin string, end string) (entity.CityDatas, error)
 	FindByPrefId(prefId int, begin string, end string) (entity.CityDatas, error)
-	GetMonthlyCityRankingOfBuildCount(prefId int, begin string, end string) (entity.CityDatasDto, error)
-	GetMonthlyPrefRankingOfBuildCount(begin string, end string) (entity.CityDatasDto, error)
 }
