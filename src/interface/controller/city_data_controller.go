@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"net/http"
 	"residential_map_api/src/entity/param"
 	"residential_map_api/src/interface/gateway"
@@ -90,5 +91,6 @@ func (cd *cityDataController) GetCityDataInSamePrefecture(c Context) error {
 	}
 	result, err := cd.Interactor.CompareCitiesInSamePrefecture(cityDataParam)
 	pp.Println(result)
-	return c.JSON(http.StatusOK, result)
+	jsonBytes, err := json.Marshal(result)
+	return c.JSONBlob(http.StatusOK, jsonBytes)
 }

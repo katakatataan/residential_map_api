@@ -45,14 +45,14 @@ func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin stri
 	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=127.0.0.1 port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME")))
 	// rows, err := conn.Queryx("SELECT * FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY city_id ASC, build_date ASC", prefId, begin, end)
 	rows, err := conn.Query("SELECT id, year, month, residential_use_type_id, construction_type_id, build_type_id, residential_type_id, structure_type_id, pref_id, pref_name, build_date, city_id, city_name, built_count, total_square_meter FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY city_id ASC, build_date ASC", prefId, begin, end)
-	type city struct {
+	type City struct {
 		CityId           int         `db:"city_id" json:"city_id"`
 		CityName         null.String `db:"city_name" json:"city_name"`
 		BuiltCount       int         `db:"built_count" json:"built_count"`
 		TotalSquareMeter int         `db:"total_square_meter" json:"total_square_meter"`
 		MonthlyRank      int         `db:"montyly_rank" json:"monthly_rank"`
 	}
-	type common struct {
+	type Common struct {
 		Id                   int         `db:"id" json:"id"`
 		Year                 int         `db:"year" json:"year"`
 		Month                int         `db:"month" json:"month"`
@@ -66,16 +66,16 @@ func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin stri
 		BuildDate            string      `db:"build_date" json:"build_date"`
 	}
 	type data struct {
-		common
-		cities []city `json:"cities"`
+		Common
+		Cities []City `json:"cities"`
 	}
 	res := data{}
 	for rows.Next() {
-		common := common{}
-		city := city{}
+		common := Common{}
+		city := City{}
 		err = rows.Scan(&common.Id, &common.Year, &common.Month, &common.ResidentialUseTypeId, &common.ConstructionTypeId, &common.BuildTypeId, &common.ResidentialTypeId, &common.StructureType, &common.PrefId, &common.PrefName, &common.BuildDate, &city.CityId, &city.CityName, &city.BuiltCount, &city.TotalSquareMeter)
-		res.cities = append(res.cities, city)
-		res.common = common
+		res.Cities = append(res.Cities, city)
+		res.Common = common
 		if err != nil {
 			return res, err
 		}
