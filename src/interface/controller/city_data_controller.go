@@ -49,6 +49,7 @@ func (cd *cityDataController) GetCityDataByCityId(c Context) error {
 }
 
 func (cd *cityDataController) GetCityDataByPrefId(c Context) error {
+	// TODO ここは集計したことでprefdataになるのでprefControllerに移行
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
 	if err != nil {
@@ -58,6 +59,7 @@ func (cd *cityDataController) GetCityDataByPrefId(c Context) error {
 	if err != nil {
 		return c.JSON(400, err)
 	}
+	pp.Println(cityDataParam)
 	result, err := cd.Interactor.FetchCityDatasByPrefId(cityDataParam)
 	return c.JSON(http.StatusOK, result)
 }

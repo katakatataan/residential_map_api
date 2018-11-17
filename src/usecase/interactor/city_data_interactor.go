@@ -5,6 +5,8 @@ import (
 	"residential_map_api/src/entity/param"
 	"residential_map_api/src/entity/response"
 	"residential_map_api/src/usecase/repository"
+
+	"github.com/k0kubun/pp"
 )
 
 type CityDataInteractor struct {
@@ -36,14 +38,15 @@ func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *param.CityDataP
 	return res, nil
 }
 
-func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatas, error) {
-	var citydata entity.CityDatas
-	res := response.ResStatisticsCityDatas{
-		Data: citydata,
-	}
-	citydata, err := cdi.CityDataRepository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasByPrefId, error) {
+	var prefData entity.PrefDatas
+	prefData, err := cdi.CityDataRepository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+	pp.Println(prefData)
 	if err != nil {
-		return response.ResStatisticsCityDatas{}, err
+		return response.ResStatisticsCityDatasByPrefId{}, err
+	}
+	res := response.ResStatisticsCityDatasByPrefId{
+		Data: prefData,
 	}
 	return res, nil
 }

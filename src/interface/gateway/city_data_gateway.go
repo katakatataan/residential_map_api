@@ -32,13 +32,13 @@ func (cdg *CityDataGateway) FindByCityId(cityId int, begin string, end string) (
 	return cityDatas, nil
 }
 
-func (cdg *CityDataGateway) FindByPrefId(prefId int, begin string, end string) (entity.CityDatas, error) {
-	var cityDatas entity.CityDatas
-	err := cdg.Find(&cityDatas, "SELECT pref_id, pref_name, SUM(built_count) as built_count, SUM(total_square_meter) AS total_square_meter,  date_trunc('month', build_date) as build_date FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 GROUP BY pref_id, pref_name,  build_date ORDER BY  build_date ASC", prefId, begin, end)
+func (cdg *CityDataGateway) FindByPrefId(prefId int, begin string, end string) (entity.PrefDatas, error) {
+	var prefDatas entity.PrefDatas
+	err := cdg.Find(&prefDatas, "SELECT pref_id, pref_name, SUM(built_count) as built_count, SUM(total_square_meter) AS total_square_meter,  date_trunc('month', build_date) as build_date FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 GROUP BY pref_id, pref_name,  build_date ORDER BY  build_date ASC", prefId, begin, end)
 	if err != nil {
-		return entity.CityDatas{}, err
+		return entity.PrefDatas{}, err
 	}
-	return cityDatas, nil
+	return prefDatas, nil
 }
 
 func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin string, end string) (interface{}, error) {
