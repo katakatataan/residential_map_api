@@ -12,7 +12,7 @@ func routeForStatistics(g *echo.Group, sqlHandler SqlHandler) {
 	})
 
 	g.GET("/pref", func(c echo.Context) error {
-		return controller.NewCityDataController(&sqlHandler).GetCityDataByPrefId(c)
+		return controller.NewPrefDataController(&sqlHandler).GetPrefDataByPrefId(c)
 	})
 
 	g.GET("/city/ranking/build_count", func(c echo.Context) error {

@@ -38,19 +38,6 @@ func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *param.CityDataP
 	return res, nil
 }
 
-func (cdi *CityDataInteractor) FetchCityDatasByPrefId(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasByPrefId, error) {
-	var prefData entity.PrefDatas
-	prefData, err := cdi.CityDataRepository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
-	pp.Println(prefData)
-	if err != nil {
-		return response.ResStatisticsCityDatasByPrefId{}, err
-	}
-	res := response.ResStatisticsCityDatasByPrefId{
-		Data: prefData,
-	}
-	return res, nil
-}
-
 func (cdi *CityDataInteractor) CompareCitiesInSamePrefecture(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasBuildCountInSamePrefecture, error) {
 	citydata, err := cdi.CityDataRepository.CompareCitiesInSamePrefecture(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
 	res := response.ResStatisticsCityDatasBuildCountInSamePrefecture{
@@ -66,6 +53,7 @@ func (cdi *CityDataInteractor) CompareCitiesInSamePrefecture(cityDataParam *para
 func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasBuildCountRanking, error) {
 	var citydata entity.CityDatasBuildCountRanking
 	citydata, err := cdi.CityDataRankingRepository.GetMonthlyCityRankingOfBuildCount(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+	pp.Println(citydata)
 	res := response.ResStatisticsCityDatasBuildCountRanking{
 		Data: citydata,
 	}

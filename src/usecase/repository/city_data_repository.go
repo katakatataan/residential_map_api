@@ -7,6 +7,5 @@ import (
 type CityDataRepository interface {
 	FindAll() (entity.CityDatas, error)
 	FindByCityId(cityId int, begin string, end string) (entity.CityDatas, error)
-	FindByPrefId(prefId int, begin string, end string) (entity.PrefDatas, error)
 	CompareCitiesInSamePrefecture(prefId int, begin string, end string) (interface{}, error)
 }

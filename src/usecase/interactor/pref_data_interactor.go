@@ -11,6 +11,7 @@ import (
 
 type PrefDataInteractor struct {
 	PrefDataRankingRepository repository.PrefDataRankingRepository
+	PrefDataRepository        repository.PrefDataRepository
 }
 
 func (cdi *PrefDataInteractor) GetPrefDataRanking(prefDataParam *param.PrefDataParamDto) (response.ResStatisticsPrefDatasBuildCountRanking, error) {
@@ -22,6 +23,19 @@ func (cdi *PrefDataInteractor) GetPrefDataRanking(prefDataParam *param.PrefDataP
 	}
 	if err != nil {
 		return response.ResStatisticsPrefDatasBuildCountRanking{}, err
+	}
+	return res, nil
+}
+
+func (cdi *PrefDataInteractor) FetchPrefDatasByPrefId(cityDataParam *param.PrefDataParamDto) (response.ResStatisticsCityDatasByPrefId, error) {
+	var prefData entity.PrefDatas
+	prefData, err := cdi.PrefDataRepository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+	pp.Println(prefData)
+	if err != nil {
+		return response.ResStatisticsCityDatasByPrefId{}, err
+	}
+	res := response.ResStatisticsCityDatasByPrefId{
+		Data: prefData,
 	}
 	return res, nil
 }

@@ -13,7 +13,6 @@ import (
 type CityDataController interface {
 	GetCityDataByCityId(c Context) error
 	GetCityDataInSamePrefecture(c Context) error
-	GetCityDataByPrefId(c Context) error
 	GetCityDataRanking(c Context) error
 	GetPrefDataRanking(c Context) error
 }
@@ -49,22 +48,6 @@ func (cd *cityDataController) GetCityDataByCityId(c Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
-func (cd *cityDataController) GetCityDataByPrefId(c Context) error {
-	// TODO ここは集計したことでprefdataになるのでprefControllerに移行
-	cityDataParam := new(param.CityDataParamDto)
-	err := c.Bind(cityDataParam)
-	if err != nil {
-		return c.JSON(400, err)
-	}
-	err = c.Validate(cityDataParam)
-	if err != nil {
-		return c.JSON(400, err)
-	}
-	pp.Println(cityDataParam)
-	result, err := cd.Interactor.FetchCityDatasByPrefId(cityDataParam)
-	return c.JSON(http.StatusOK, result)
-}
-
 func (cd *cityDataController) GetCityDataRanking(c Context) error {
 	cityDataParam := new(param.CityDataParamDto)
 	err := c.Bind(cityDataParam)
@@ -75,6 +58,7 @@ func (cd *cityDataController) GetCityDataRanking(c Context) error {
 	if err != nil {
 		return c.JSON(400, err)
 	}
+	pp.Println(cityDataParam)
 	result, err := cd.Interactor.GetCityDataRanking(cityDataParam)
 	return c.JSON(http.StatusOK, result)
 }
