@@ -1,24 +1,17 @@
-POST https://example.com/comments HTTP/1.1
-content-type: application/json
+###
+GET http://localhost:2000/master/prefcities
 
-{
-    "name": "sample",
-    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
-}
+###
+GET http://localhost:2000/statistics/city?begin=2018-01-01&end=2018-05-01&city_id=13101
 
-### 2018年1月から2018年7月までの単月の市区町村の集計結果
-GET http://localhost:2000/citydata?begin=2018-01-01&end=2018-07-01&city_id=13101
-### 2018年1月から2018年7月までの単月の都道府県の集計結果
-GET http://localhost:2000/prefdata?pref_id=13&begin=2017-01-01&end=2018-01-01
-### 2018年一月の東京都の市区町村を着工戸数でランキング出力
-GET http://localhost:2000/monthlycitydatarank?pref_id=13&begin=2018-01-01&end=2018-02-01
-### 2018年一月の全国の着工戸数でランキング出力
-GET http://localhost:2000/monthlyprefdatarank?begin=2018-01-01&end=2018-02-01
-### 市区町村マスタ
-GET http://localhost:2000/mst_prefcities
+###
+GET http://localhost:2000/statistics/pref?begin=2017-01-01&end=2017-02-01&pref_id=13
 
-###  validation error
-GET http://localhost:2000/citydata?begin=201--01&end=2018-07-01&city_id=13101
-
-### geojsonの取得
-GET http://localhost:2000/geopref?pref_id=13&pref_id=14&weight=0.000001
+###
+GET http://localhost:2000/geojson/pref?pref_id=13&weight=0.000001
+###
+GET http://localhost:2000/statistics/city/ranking/build_count?begin=2017-01-01&end=2017-02-01&pref_id=13
+###
+GET http://localhost:2000/statistics/pref/ranking/build_count?begin=2017-01-01&end=2017-02-01
+###
+GET http://localhost:2000/statistics/city/ranking/build_count/new?begin=2017-01-01&end=2017-02-01&pref_id=13
