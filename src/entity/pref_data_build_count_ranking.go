@@ -7,8 +7,7 @@ type PrefDataBuildCountRanking struct {
 	BuiltCount  int         `db:"built_count" json:"built_count"`
 	PrefId      int         `db:"pref_id" json:"pref_id"`
 	PrefName    null.String `db:"pref_name" json:"pref_name"`
-	BuildMonth  string      `db:"build_month" json:"build_month"`
-	BuildYear   string      `db:"build_year" json:"build_year"`
+	BuildDate   string      `db:"build_date" json:"build_date"`
 	MontylyRank int         `db:"monthly_rank" json:"monthly_rank"`
 }
 
