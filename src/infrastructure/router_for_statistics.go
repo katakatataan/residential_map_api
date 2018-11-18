@@ -11,6 +11,10 @@ func routeForStatistics(g *echo.Group, sqlHandler SqlHandler) {
 		return controller.NewCityDataController(&sqlHandler).GetCityDataByCityId(c)
 	})
 
+	g.GET("/city/monthly", func(c echo.Context) error {
+		return controller.NewCityDataController(&sqlHandler).GetCityDataByTargetPeriod(c)
+	})
+
 	g.GET("/pref", func(c echo.Context) error {
 		return controller.NewPrefDataController(&sqlHandler).GetPrefDataByPrefId(c)
 	})

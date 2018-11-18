@@ -76,6 +76,47 @@ func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin stri
 	// pp.Println(res)
 	return res, nil
 }
+func (cdg *CityDataGateway) FindByCityIdByTargetPeriod(cityId int, begin string, end string) (interface{}, error) {
+	// TODO ここ今interface作るの面倒なのであとで直す
+	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=127.0.0.1 port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME")))
+	rows, err := conn.Query("SELECT id, year, month, residential_use_type_id, construction_type_id, build_type_id, residential_type_id, structure_type_id, pref_id, pref_name, to_char(build_date,'YYYY-MM') as build_date, city_id, city_name, built_count, total_square_meter FROM city_data WHERE city_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY city_id ASC, build_date ASC", cityId, begin, end)
+	type Monthly struct {
+		BuiltCount       int    `db:"built_count" json:"built_count"`
+		TotalSquareMeter int    `db:"total_square_meter" json:"total_square_meter"`
+		BuildDate        string `db:"build_date" json:"build_date"`
+		Year             int    `db:"year" json:"year"`
+		Month            int    `db:"month" json:"month"`
+	}
+	type Common struct {
+		Id                   int         `db:"id" json:"id"`
+		ResidentialUseTypeId int         `db:"residential_use_type_id" json:"residential_use_type"`
+		ConstructionTypeId   int         `db:"construction_type_id" json:"construction_type_id"`
+		CityId               int         `db:"city_id" json:"city_id"`
+		BuildTypeId          int         `db:"build_type_id" json:"build_type_id"`
+		ResidentialTypeId    int         `db:"residential_type_id" json:"residential_type_id"`
+		StructureType        int         `db:"structure_type_id" json:"structure_type"`
+		PrefId               int         `db:"pref_id" json:"pref_id"`
+		PrefName             null.String `db:"pref_name" json:"pref_name"`
+		CityName             null.String `db:"city_name" json:"city_name"`
+	}
+	type data struct {
+		Common
+		Monthly []Monthly `json:"monthly"`
+	}
+	res := data{}
+	for rows.Next() {
+		common := Common{}
+		monthly := Monthly{}
+		err = rows.Scan(&common.Id, &monthly.Year, &monthly.Month, &common.ResidentialUseTypeId, &common.ConstructionTypeId, &common.BuildTypeId, &common.ResidentialTypeId, &common.StructureType, &common.PrefId, &common.PrefName, &monthly.BuildDate, &common.CityId, &common.CityName, &monthly.BuiltCount, &monthly.TotalSquareMeter)
+		res.Monthly = append(res.Monthly, monthly)
+		res.Common = common
+		if err != nil {
+			return res, err
+		}
+	}
+	// pp.Println(res)
+	return res, nil
+}
 func (cdg *CityDataGateway) GetMonthlyCityRankingOfBuildCount(prefId int, begin string, end string) (entity.CityDatasBuildCountRanking, error) {
 	var cityDatas entity.CityDatasBuildCountRanking
 	err := cdg.Find(&cityDatas, "SELECT id, built_count, total_square_meter, year, month, residential_use_type_id, construction_type_id, city_id, build_type_id, residential_type_id, pref_id, city_name, pref_name, build_date,rank() over( partition by date_trunc('month',build_date) order by built_count desc) as monthly_rank FROM city_data WHERE pref_id = $1 AND  build_date >= $2 AND build_date < $3  ORDER BY date_trunc('month', build_date)", prefId, begin, end)

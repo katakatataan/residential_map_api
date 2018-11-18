@@ -15,6 +15,7 @@ type CityDataController interface {
 	GetCityDataInSamePrefecture(c Context) error
 	GetCityDataRanking(c Context) error
 	GetPrefDataRanking(c Context) error
+	GetCityDataByTargetPeriod(c Context) error
 }
 
 type cityDataController struct {
@@ -74,6 +75,22 @@ func (cd *cityDataController) GetCityDataInSamePrefecture(c Context) error {
 		return c.JSON(400, err)
 	}
 	result, err := cd.Interactor.CompareCitiesInSamePrefecture(cityDataParam)
+	pp.Println(result)
+	jsonBytes, err := json.Marshal(result)
+	return c.JSONBlob(http.StatusOK, jsonBytes)
+}
+
+func (cd *cityDataController) GetCityDataByTargetPeriod(c Context) error {
+	cityDataParam := new(param.CityDataParamDto)
+	err := c.Bind(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	err = c.Validate(cityDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	result, err := cd.Interactor.GetCityDataByTargetPeriod(cityDataParam)
 	pp.Println(result)
 	jsonBytes, err := json.Marshal(result)
 	return c.JSONBlob(http.StatusOK, jsonBytes)

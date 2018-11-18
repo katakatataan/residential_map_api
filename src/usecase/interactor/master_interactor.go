@@ -10,7 +10,7 @@ type MstPrefCityInteractor struct {
 }
 
 func (mpci *MstPrefCityInteractor) FetchAllPrefCities() (response.ResMasterPrefCities, error) {
-	prefcities, err := mpci.Repository.FindAll()
+	prefcities, err := mpci.Repository.FindAllPrefCities()
 	res := response.ResMasterPrefCities{
 		prefcities,
 	}

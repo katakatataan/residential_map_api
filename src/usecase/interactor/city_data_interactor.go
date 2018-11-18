@@ -62,3 +62,14 @@ func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *param.CityDataP
 	}
 	return res, nil
 }
+
+func (cdi *CityDataInteractor) GetCityDataByTargetPeriod(cityDataParam *param.CityDataParamDto) (response.ResStatisticsMontylyCityDatas, error) {
+	citydata, err := cdi.CityDataRepository.FindByCityIdByTargetPeriod(cityDataParam.CityId, cityDataParam.Begin, cityDataParam.End)
+	res := response.ResStatisticsMontylyCityDatas{
+		Data: citydata,
+	}
+	if err != nil {
+		return response.ResStatisticsMontylyCityDatas{}, err
+	}
+	return res, nil
+}
