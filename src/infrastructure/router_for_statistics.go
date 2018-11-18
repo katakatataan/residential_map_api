@@ -15,16 +15,16 @@ func routeForStatistics(g *echo.Group, sqlHandler SqlHandler) {
 		return controller.NewCityDataController(&sqlHandler).GetCityDataByTargetPeriod(c)
 	})
 
-	g.GET("/pref", func(c echo.Context) error {
-		return controller.NewPrefDataController(&sqlHandler).GetPrefDataByPrefId(c)
-	})
-
 	g.GET("/city/ranking/build_count", func(c echo.Context) error {
 		return controller.NewCityDataController(&sqlHandler).GetCityDataRanking(c)
 	})
 
 	g.GET("/city/ranking/build_count/new", func(c echo.Context) error {
 		return controller.NewCityDataController(&sqlHandler).GetCityDataInSamePrefecture(c)
+	})
+
+	g.GET("/pref", func(c echo.Context) error {
+		return controller.NewPrefDataController(&sqlHandler).GetPrefDataByPrefId(c)
 	})
 
 	g.GET("/pref/ranking/build_count", func(c echo.Context) error {
