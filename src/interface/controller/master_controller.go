@@ -31,3 +31,19 @@ func (mpc *mstPrefCityController) GetMstPrefCity(c Context) error {
 	}
 	return c.JSON(http.StatusOK, result)
 }
+
+func (mpc *mstPrefCityController) GetMstPref(c Context) error {
+	result, err := mpc.Interactor.FetchPref()
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, result)
+}
+
+func (mpc *mstPrefCityController) GetMstCity(c Context) error {
+	result, err := mpc.Interactor.FetchCity()
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, result)
+}

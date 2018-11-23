@@ -19,3 +19,25 @@ func (mpci *MstPrefCityInteractor) FetchAllPrefCities() (response.ResMasterPrefC
 	}
 	return res, nil
 }
+
+func (mpci *MstPrefCityInteractor) FetchPref() (response.ResMasterPref, error) {
+	prefs, err := mpci.Repository.FindPref()
+	res := response.ResMasterPref{
+		prefs,
+	}
+	if err != nil {
+		return response.ResMasterPref{}, err
+	}
+	return res, nil
+}
+
+func (mpci *MstPrefCityInteractor) FetchCity() (response.ResMasterCity, error) {
+	prefs, err := mpci.Repository.FindCity()
+	res := response.ResMasterCity{
+		prefs,
+	}
+	if err != nil {
+		return response.ResMasterCity{}, err
+	}
+	return res, nil
+}

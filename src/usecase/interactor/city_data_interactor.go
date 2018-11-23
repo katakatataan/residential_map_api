@@ -5,8 +5,6 @@ import (
 	"residential_map_api/src/entity/param"
 	"residential_map_api/src/entity/response"
 	"residential_map_api/src/usecase/repository"
-
-	"github.com/k0kubun/pp"
 )
 
 type CityDataInteractor struct {
@@ -53,7 +51,6 @@ func (cdi *CityDataInteractor) CompareCitiesInSamePrefecture(cityDataParam *para
 func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasBuildCountRanking, error) {
 	var citydata entity.CityDatasBuildCountRanking
 	citydata, err := cdi.CityDataRankingRepository.GetMonthlyCityRankingOfBuildCount(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
-	pp.Println(citydata)
 	res := response.ResStatisticsCityDatasBuildCountRanking{
 		Data: citydata,
 	}

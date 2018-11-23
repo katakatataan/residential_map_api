@@ -5,8 +5,6 @@ import (
 	"residential_map_api/src/entity/param"
 	"residential_map_api/src/entity/response"
 	"residential_map_api/src/usecase/repository"
-
-	"github.com/k0kubun/pp"
 )
 
 type PrefDataInteractor struct {
@@ -17,7 +15,6 @@ type PrefDataInteractor struct {
 func (cdi *PrefDataInteractor) GetPrefDataRanking(prefDataParam *param.PrefDataParamDto) (response.ResStatisticsPrefDatasBuildCountRanking, error) {
 	var prefData entity.PrefDatasBuildCountRanking
 	prefData, err := cdi.PrefDataRankingRepository.GetMonthlyPrefRankingOfBuildCount(prefDataParam.Begin, prefDataParam.End)
-	pp.Println(prefData)
 	res := response.ResStatisticsPrefDatasBuildCountRanking{
 		Data: prefData,
 	}
@@ -30,7 +27,6 @@ func (cdi *PrefDataInteractor) GetPrefDataRanking(prefDataParam *param.PrefDataP
 func (cdi *PrefDataInteractor) FetchPrefDatasByPrefId(cityDataParam *param.PrefDataParamDto) (response.ResStatisticsCityDatasByPrefId, error) {
 	var prefData entity.PrefDatas
 	prefData, err := cdi.PrefDataRepository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
-	pp.Println(prefData)
 	if err != nil {
 		return response.ResStatisticsCityDatasByPrefId{}, err
 	}
