@@ -2,15 +2,18 @@ package gateway
 
 import (
 	"residential_map_api/src/entity"
+
+	"github.com/k0kubun/pp"
 )
 
 type MstPrefCityGateway struct {
 	SqlHandler
 }
 
-func (pcg *MstPrefCityGateway) FindAllPrefCities() (entity.PrefCities, error) {
+func (pcg *MstPrefCityGateway) FindAllPrefCities(prefId int) (entity.PrefCities, error) {
 	var prefCities entity.PrefCities
-	err := pcg.Find(&prefCities, "SELECT * FROM mst_pref_city ORDER BY id ASC")
+	pp.Println(prefId)
+	err := pcg.Find(&prefCities, "SELECT * FROM mst_pref_city WHERE pref_id = $1 ORDER BY id ASC", prefId)
 	if err != nil {
 		return entity.PrefCities{}, err
 	}

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"residential_map_api/src/entity/param"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/interactor"
 )
@@ -25,7 +26,16 @@ func NewMstPrefCityController(sqlHandler gateway.SqlHandler) *mstPrefCityControl
 }
 
 func (mpc *mstPrefCityController) GetMstPrefCity(c Context) error {
-	result, err := mpc.Interactor.FetchAllPrefCities()
+	prefDataParam := new(param.MstPrefCityParamDto)
+	err := c.Bind(prefDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	err = c.Validate(prefDataParam)
+	if err != nil {
+		return c.JSON(400, err)
+	}
+	result, err := mpc.Interactor.FetchAllPrefCities(prefDataParam)
 	if err != nil {
 		return err
 	}
