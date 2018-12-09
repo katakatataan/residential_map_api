@@ -28,6 +28,7 @@ func NewMstPrefCityController(sqlHandler gateway.SqlHandler) *mstPrefCityControl
 func (mpc *mstPrefCityController) GetMstPrefCity(c Context) error {
 	prefDataParam := new(param.MstPrefCityParamDto)
 	err := c.Bind(prefDataParam)
+	// TOOD: コンテキストを引き継ぐエラーハンドリングに修正
 	if err != nil {
 		return c.JSON(400, err)
 	}

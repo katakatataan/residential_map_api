@@ -33,6 +33,7 @@ func NewPrefDataController(sqlHandler gateway.SqlHandler) *prefDataController {
 
 func (pd *prefDataController) GetPrefDataRanking(c Context) error {
 	prefDataParam := new(param.PrefDataParamDto)
+	// TODO: コンテキストを引き継ぐエラーハンドリングに修正
 	err := c.Bind(prefDataParam)
 	if err != nil {
 		return c.JSON(400, err)
