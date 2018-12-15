@@ -4,5 +4,7 @@ WORKDIR /go/src/residential_map_api
 RUN go get github.com/codegangsta/gin
 RUN go get github.com/golang/dep/cmd/dep
 COPY ./ .
+RUN rm -rf vendor
+RUN dep ensure
 
-CMD ["sh", "Dockerrun.dev.sh", "gin", "-p","2000","-a","1323","run","main.go"]
+CMD ["go", "run", "main.go"]
