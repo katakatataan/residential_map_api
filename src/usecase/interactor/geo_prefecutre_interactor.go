@@ -6,7 +6,6 @@ import (
 	"residential_map_api/src/usecase/repository"
 	"strconv"
 
-	"github.com/k0kubun/pp"
 	geojson "github.com/paulmach/go.geojson"
 )
 
@@ -14,6 +13,8 @@ type GeoPrefectureInteractor struct {
 	Repository         repository.GeoPrefectureRepository
 	CityDataRepository repository.CityDataRepository
 }
+
+const CityIdKey = "N03_007"
 
 func (gpi *GeoPrefectureInteractor) FindByPrefId(geoPrefParam *param.GeoPrefectureDto) (response.ResGeojsonFeatureCollection, error) {
 	result, err := gpi.Repository.FindByPrefId(geoPrefParam)
@@ -24,8 +25,6 @@ func (gpi *GeoPrefectureInteractor) FindByPrefId(geoPrefParam *param.GeoPrefectu
 			return response.ResGeojsonFeatureCollection{}, err
 		}
 		for _, v := range fc.Features {
-			// TODO: ここのloopのレベルでデータを結合
-			pp.Println(v.Properties["N03_007"])
 			res.AddFeature(v)
 		}
 	}
@@ -52,7 +51,7 @@ func (gpi *GeoPrefectureInteractor) FindBuildCountByPrefId(geoPrefParam *param.G
 		}
 		for _, v := range fc.Features {
 			// FIXME : 処理が無駄に回ってしまうので最適化
-			cityId := v.Properties["N03_007"].(string)
+			cityId := v.Properties[CityIdKey].(string)
 			cityIdInt, _ := strconv.Atoi(cityId)
 			for _, d := range citydata {
 				if d.CityId == cityIdInt {
