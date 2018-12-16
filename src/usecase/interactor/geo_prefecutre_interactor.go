@@ -44,22 +44,14 @@ func (gpi *GeoPrefectureInteractor) FindBuildCountByPrefId(geoPrefParam *param.G
 	if err != nil {
 		return response.ResGeojsonFeatureCollection{}, err
 	}
-	// TODO: ここは複数の都道府県を想定してしまっている
-	// TODO: pythonで言う所のこの処理をやりたい。 data converterとしてpythonを用意する?
-	// pgd_df_pref_geojson = gpd.read_file('http://54.249.162.108/geojson/pref?pref_id=13&weight=0.0001')
-	// pgd_df_pref_geojson.rename(columns={
-	// 													 'N03_007': 'city_id', 'N03_001': 'pref_name', 'N03_004': 'city_name'}, inplace=True)
-	// df_citydata = read_frame(citydata)
-	// print(df_citydata)
-	// df_citydata['city_id'] = df_citydata['city_id'].astype(str).str.zfill(5)
-	// merged = pgd_df_pref_geojson.merge(df_citydata, on='city_id')
+	// FIXME : 処理が無駄に回ってしまうので最適化
 	for _, c := range result {
 		fc, err := geojson.UnmarshalFeatureCollection(c.Json)
 		if err != nil {
 			return response.ResGeojsonFeatureCollection{}, err
 		}
 		for _, v := range fc.Features {
-			// FIXME :ここでこけるのでプログラムでいい感じに判定
+			// FIXME : 処理が無駄に回ってしまうので最適化
 			cityId := v.Properties["N03_007"].(string)
 			cityIdInt, _ := strconv.Atoi(cityId)
 			for _, d := range citydata {
