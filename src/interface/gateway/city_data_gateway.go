@@ -59,7 +59,7 @@ func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin stri
 		Id                   int         `db:"id" json:"id"`
 		Year                 int         `db:"year" json:"year"`
 		Month                int         `db:"month" json:"month"`
-		ResidentialUseTypeId int         `db:"residential_use_type_id" json:"residential_use_type"`
+		ResidentialUseTypeId int         `db:"residential_use_type_id" json:"residential_use_type_id"`
 		ConstructionTypeId   int         `db:"construction_type_id" json:"construction_type_id"`
 		BuildTypeId          int         `db:"build_type_id" json:"build_type_id"`
 		ResidentialTypeId    int         `db:"residential_type_id" json:"residential_type_id"`
@@ -102,7 +102,7 @@ func (cdg *CityDataGateway) FindByCityIdByTargetPeriod(cityId int, begin string,
 	// TODO: jsonにmarshalする時にpropertyを読み取るため大文字で表記
 	type Common struct {
 		Id                   int         `db:"id" json:"id"`
-		ResidentialUseTypeId int         `db:"residential_use_type_id" json:"residential_use_type"`
+		ResidentialUseTypeId int         `db:"residential_use_type_id" json:"residential_use_type_id"`
 		ConstructionTypeId   int         `db:"construction_type_id" json:"construction_type_id"`
 		CityId               int         `db:"city_id" json:"city_id"`
 		BuildTypeId          int         `db:"build_type_id" json:"build_type_id"`

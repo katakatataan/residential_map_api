@@ -61,13 +61,12 @@ func (gpi *GeoPrefectureInteractor) FindBuildCountByPrefId(geoPrefParam *param.G
 		for _, v := range fc.Features {
 			// FIXME :ここでこけるのでプログラムでいい感じに判定
 			cityId := v.Properties["N03_007"].(string)
-			pp.Println(cityId)
 			cityIdInt, _ := strconv.Atoi(cityId)
 			for _, d := range citydata {
-				if d.Id == cityIdInt {
-					v.Properties["data"] = citydata
+				if d.CityId == cityIdInt {
+					v.Properties["statistics"] = d
+					break
 				}
-				break
 			}
 			res.AddFeature(v)
 		}

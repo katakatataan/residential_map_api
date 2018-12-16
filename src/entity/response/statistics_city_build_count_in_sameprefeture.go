@@ -22,7 +22,7 @@ type ResStatisticsCityDatasBuildCountInSamePrefectureCommon struct {
 	Id                   int         `json:"id"`
 	Year                 int         `json:"year"`
 	Month                int         `json:"month"`
-	ResidentialUseTypeId int         `json:"residential_use_type"`
+	ResidentialUseTypeId int         `json:"residential_use_type_id"`
 	ConstructionTypeId   int         `json:"construction_type_id"`
 	BuildTypeId          int         `json:"build_type_id"`
 	ResidentialTypeId    int         `json:"residential_type_id"`

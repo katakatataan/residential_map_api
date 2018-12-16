@@ -8,7 +8,7 @@ type CityData struct {
 	TotalSquareMeter     int         `db:"total_square_meter" json:"total_square_meter"`
 	Year                 int         `db:"year" json:"year"`
 	Month                int         `db:"month" json:"month"`
-	ResidentialUseTypeId int         `db:"residential_use_type_id" json:"residential_use_type"`
+	ResidentialUseTypeId int         `db:"residential_use_type_id" json:"residential_use_type_id"`
 	ConstructionTypeId   int         `db:"construction_type_id" json:"construction_type_id"`
 	CityId               int         `db:"city_id" json:"city_id"`
 	BuidTypeId           int         `db:"build_type_id" json:"build_type_id"`
