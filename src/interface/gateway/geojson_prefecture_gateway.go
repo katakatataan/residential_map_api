@@ -21,6 +21,7 @@ func (cdg *GeoPrefecture) FindByPrefId(mstGeoPrefParam *param.GeoPrefectureDto) 
 
 func (cdg *GeoPrefecture) FindBuildCountByPrefId(prefId int, weight float64, begin string, end string) ([]entity.MstPrefectureGeojson, error) {
 	// TODO ここはprimitiveな値を受け取るように修正
+	// TODO: マスターコード変換
 	var mstGeojson []entity.MstPrefectureGeojson
 	q := "SELECT * FROM mst_prefecture_geojson WHERE pref_id = $1 AND weight = $2 ORDER BY pref_id"
 	err := cdg.Find(&mstGeojson, q, prefId, weight)

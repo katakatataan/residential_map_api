@@ -1,6 +1,8 @@
 package infrastructure
 
 import (
+	"os"
+
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -32,5 +34,5 @@ func Run(e *echo.Echo) {
 
 	echopprof.Wrap(e)
 	// e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))
-	e.Logger.Fatal(e.Start(":1323"))
+	e.Logger.Fatal(e.Start(os.Getenv("HOST") + ":1323"))
 }

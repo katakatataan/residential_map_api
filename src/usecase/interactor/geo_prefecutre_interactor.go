@@ -55,7 +55,10 @@ func (gpi *GeoPrefectureInteractor) FindBuildCountByPrefId(geoPrefParam *param.G
 			cityIdInt, _ := strconv.Atoi(cityId)
 			for _, d := range citydata {
 				if d.CityId == cityIdInt {
-					v.Properties["statistics"] = d
+					v.Properties["build_count"] = d.BuiltCount
+					v.Properties["total_square_meter"] = d.TotalSquareMeter
+					v.Properties["total_square_meter"] = d.ResidentialUseType
+					v.Properties["total_square_meter"] = d.ConstructionType
 					break
 				}
 			}
