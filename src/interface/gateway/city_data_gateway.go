@@ -98,7 +98,7 @@ func (cdg *CityDataGateway) FindByPrefId(pref_id int, begin string, end string) 
 
 func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin string, end string) (interface{}, error) {
 	// TODO: ここ今interface作るの面倒なのであとで直す
-	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=127.0.0.1 port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME")))
+	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME"), os.Getenv("DATABASE_HOST")))
 	// rows, err := conn.Queryx("SELECT * FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY city_id ASC, build_date ASC", prefId, begin, end)
 	// TODO: マスターコード変換
 	rows, err := conn.Query("SELECT id, year, month, residential_use_type_id, construction_type_id, build_type_id, residential_type_id, structure_type_id, pref_id, pref_name,  to_char(build_date,'YYYY-MM') as build_date, city_id, city_name, built_count, total_square_meter, rank() over( partition by date_trunc('month',build_date) order by built_count desc) as monthly_rank FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY build_date ASC, city_id ASC", prefId, begin, end)
@@ -144,7 +144,7 @@ func (cdg *CityDataGateway) FindByCityIdByTargetPeriod(cityId int, begin string,
 	// TODO: ここ今interface作るの面倒なのであとで直す
 	// TODO: 市区町村のでゼロ件表示に対応できているのか修正
 	// TODO: マスターコード変換
-	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=127.0.0.1 port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME")))
+	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME"), os.Getenv("DATABASE_HOST")))
 	rows, err := conn.Query("SELECT id, year, month, residential_use_type_id, construction_type_id, build_type_id, residential_type_id, structure_type_id, pref_id, pref_name, to_char(build_date,'YYYY-MM') as build_date, city_id, city_name, built_count, total_square_meter FROM city_data WHERE city_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY city_id ASC, build_date ASC", cityId, begin, end)
 	// TODO: jsonにmarshalする時にpropertyを読み取るため大文字で表記
 	type Monthly struct {

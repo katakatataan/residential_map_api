@@ -5,6 +5,8 @@ import (
 	"residential_map_api/src/entity/param"
 	"residential_map_api/src/entity/response"
 	"residential_map_api/src/usecase/repository"
+
+	"github.com/k0kubun/pp"
 )
 
 type CityDataInteractor struct {
@@ -43,8 +45,10 @@ func (cdi *CityDataInteractor) CompareCitiesInSamePrefecture(cityDataParam *para
 	}
 	// pp.Println(res)
 	if err != nil {
+		pp.Println(err)
 		return response.ResStatisticsCityDatasBuildCountInSamePrefecture{}, err
 	}
+	pp.Println(res)
 	return res, nil
 }
 
