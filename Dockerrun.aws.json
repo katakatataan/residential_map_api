@@ -1,6 +1,23 @@
 {
   "AWSEBDockerrunVersion": "1",
+  "Authentication": {
+    "Bucket": "docker-auth-residential-map",
+    "Key": "docker-auth.txt"
+  },
   "Image": {
-      "Update": "true"
-  }
+    "Name": "029792315346.dkr.ecr.ap-northeast-1.amazonaws.com/residential_map/residential_map_api:latest",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": "3000"
+    }
+  ],
+  "Volumes": [
+    {
+      "HostDirectory": "/tmp",
+      "ContainerDirectory": "/tmp"
+    }
+  ],
+  "Logging": "/var/log/nginx"
 }
