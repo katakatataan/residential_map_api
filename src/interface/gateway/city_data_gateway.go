@@ -101,6 +101,8 @@ func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin stri
 	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME"), os.Getenv("DATABASE_HOST")))
 	// rows, err := conn.Queryx("SELECT * FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY city_id ASC, build_date ASC", prefId, begin, end)
 	// TODO: マスターコード変換
+	pp.Println(begin)
+	pp.Println(end)
 	rows, err := conn.Query("SELECT id, year, month, residential_use_type_id, construction_type_id, build_type_id, residential_type_id, structure_type_id, pref_id, pref_name,  to_char(build_date,'YYYY-MM') as build_date, city_id, city_name, built_count, total_square_meter, rank() over( partition by date_trunc('month',build_date) order by built_count desc) as monthly_rank FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY build_date ASC, city_id ASC", prefId, begin, end)
 	type City struct {
 		CityId           int         `db:"city_id" json:"city_id"`

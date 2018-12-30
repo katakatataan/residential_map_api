@@ -75,8 +75,9 @@ func (cd *cityDataController) GetCityDataInSamePrefecture(c Context) error {
 		return c.JSON(400, err)
 	}
 	result, err := cd.Interactor.CompareCitiesInSamePrefecture(cityDataParam)
-	pp.Println(result)
+	pp.Println(err)
 	jsonBytes, err := json.Marshal(result)
+	pp.Println(err)
 	return c.JSONBlob(http.StatusOK, jsonBytes)
 }
 
