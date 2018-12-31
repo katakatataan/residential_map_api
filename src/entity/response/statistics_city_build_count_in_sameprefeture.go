@@ -26,7 +26,7 @@ type ResStatisticsCityDatasBuildCountInSamePrefectureCommon struct {
 	ConstructionTypeId   int         `json:"construction_type_id"`
 	BuildTypeId          int         `json:"build_type_id"`
 	ResidentialTypeId    int         `json:"residential_type_id"`
-	StructureType        int         `json:"structure_type"`
+	StructureTypeId      int         `json:"structure_type_id"`
 	PrefId               int         `json:"pref_id"`
 	PrefName             null.String `json:"pref_name"`
 	BuildDate            string      `json:"build_date"`

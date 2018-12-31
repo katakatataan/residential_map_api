@@ -121,7 +121,7 @@ func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin stri
 		ConstructionTypeId   int         `db:"construction_type_id" json:"construction_type_id"`
 		BuildTypeId          int         `db:"build_type_id" json:"build_type_id"`
 		ResidentialTypeId    int         `db:"residential_type_id" json:"residential_type_id"`
-		StructureType        int         `db:"structure_type_id" json:"structure_type"`
+		StructureTypeId      int         `db:"structure_type_id" json:"structure_type_id"`
 		PrefId               int         `db:"pref_id" json:"pref_id"`
 		PrefName             null.String `db:"pref_name" json:"pref_name"`
 		BuildDate            string      `db:"build_date" json:"build_date"`
@@ -166,7 +166,7 @@ func (cdg *CityDataGateway) FindByCityIdByTargetPeriod(cityId int, begin string,
 		CityId               int         `db:"city_id" json:"city_id"`
 		BuildTypeId          int         `db:"build_type_id" json:"build_type_id"`
 		ResidentialTypeId    int         `db:"residential_type_id" json:"residential_type_id"`
-		StructureType        int         `db:"structure_type_id" json:"structure_type"`
+		StructureTypeId      int         `db:"structure_type_id" json:"structure_type_id"`
 		PrefId               int         `db:"pref_id" json:"pref_id"`
 		PrefName             null.String `db:"pref_name" json:"pref_name"`
 		CityName             null.String `db:"city_name" json:"city_name"`

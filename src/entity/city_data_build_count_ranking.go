@@ -15,7 +15,7 @@ type CityDataBuildCountRanking struct {
 	CityId               int         `db:"city_id" json:"city_id"`
 	BuidTypeId           int         `db:"build_type_id" json:"build_type_id"`
 	ResidentialTypeId    int         `db:"residential_type_id" json:"residential_type_id"`
-	StructureType        int         `db:"structure_type_id" json:"structure_type"`
+	StructureTypeId      int         `db:"structure_type_id" json:"structure_type_id"`
 	PrefId               int         `db:"pref_id" json:"pref_id"`
 	CityName             null.String `db:"city_name" json:"city_name"`
 	PrefName             null.String `db:"pref_name" json:"pref_name"`
