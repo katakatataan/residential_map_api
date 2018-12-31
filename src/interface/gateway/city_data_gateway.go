@@ -103,6 +103,8 @@ func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin stri
 	// TODO: マスターコード変換
 	pp.Println(begin)
 	pp.Println(end)
+	pp.Println(string([]rune(begin)[:10]))
+	pp.Println(string([]rune(end)[:10]))
 	rows, err := conn.Query("SELECT id, year, month, residential_use_type_id, construction_type_id, build_type_id, residential_type_id, structure_type_id, pref_id, pref_name,  to_char(build_date,'YYYY-MM') as build_date, city_id, city_name, built_count, total_square_meter, rank() over( partition by date_trunc('month',build_date) order by built_count desc) as monthly_rank FROM city_data WHERE pref_id = $1 AND build_date >= $2 AND build_date < $3 ORDER BY build_date ASC, city_id ASC", prefId, string([]rune(begin)[:10]), string([]rune(end)[:10]))
 	type City struct {
 		CityId           int         `db:"city_id" json:"city_id"`
