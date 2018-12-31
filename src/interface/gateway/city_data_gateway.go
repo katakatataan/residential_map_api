@@ -134,7 +134,7 @@ func (cdg *CityDataGateway) CompareCitiesInSamePrefecture(prefId int, begin stri
 	for rows.Next() {
 		common := Common{}
 		city := City{}
-		err = rows.Scan(&common.Id, &common.Year, &common.Month, &common.ResidentialUseTypeId, &common.ConstructionTypeId, &common.BuildTypeId, &common.ResidentialTypeId, &common.StructureType, &common.PrefId, &common.PrefName, &common.BuildDate, &city.CityId, &city.CityName, &city.BuiltCount, &city.TotalSquareMeter, &city.MonthlyRank)
+		err = rows.Scan(&common.Id, &common.Year, &common.Month, &common.ResidentialUseTypeId, &common.ConstructionTypeId, &common.BuildTypeId, &common.ResidentialTypeId, &common.StructureTypeId, &common.PrefId, &common.PrefName, &common.BuildDate, &city.CityId, &city.CityName, &city.BuiltCount, &city.TotalSquareMeter, &city.MonthlyRank)
 		res.Cities = append(res.Cities, city)
 		res.Common = common
 		if err != nil {
@@ -179,7 +179,7 @@ func (cdg *CityDataGateway) FindByCityIdByTargetPeriod(cityId int, begin string,
 	for rows.Next() {
 		common := Common{}
 		monthly := Monthly{}
-		err = rows.Scan(&common.Id, &monthly.Year, &monthly.Month, &common.ResidentialUseTypeId, &common.ConstructionTypeId, &common.BuildTypeId, &common.ResidentialTypeId, &common.StructureType, &common.PrefId, &common.PrefName, &monthly.BuildDate, &common.CityId, &common.CityName, &monthly.BuiltCount, &monthly.TotalSquareMeter)
+		err = rows.Scan(&common.Id, &monthly.Year, &monthly.Month, &common.ResidentialUseTypeId, &common.ConstructionTypeId, &common.BuildTypeId, &common.ResidentialTypeId, &common.StructureTypeId, &common.PrefId, &common.PrefName, &monthly.BuildDate, &common.CityId, &common.CityName, &monthly.BuiltCount, &monthly.TotalSquareMeter)
 		res.Monthly = append(res.Monthly, monthly)
 		res.Common = common
 		if err != nil {
