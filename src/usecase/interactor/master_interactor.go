@@ -1,8 +1,8 @@
 package interactor
 
 import (
-	"residential_map_api/src/entity/param"
-	"residential_map_api/src/entity/response"
+	"residential_map_api/src/usecase/interactor/param"
+	"residential_map_api/src/usecase/interactor/response"
 	"residential_map_api/src/usecase/repository"
 )
 

@@ -3,9 +3,9 @@ package controller
 import (
 	"encoding/json"
 	"net/http"
-	"residential_map_api/src/entity/param"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/interactor"
+	"residential_map_api/src/usecase/interactor/param"
 
 	"github.com/k0kubun/pp"
 )
