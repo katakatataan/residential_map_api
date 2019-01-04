@@ -14,8 +14,6 @@ type CityDataController interface {
 	GetCityDataByCityId(c Context) error
 	FindCityRankingBuildCount(c Context) error
 	FindCitiesGeojsonWithBuildCount(c Context) error
-	GetCityDataRanking(c Context) error
-	GetPrefDataRanking(c Context) error
 	GetCityDataByTargetPeriod(c Context) error
 }
 
