@@ -5,28 +5,34 @@ import (
 	"residential_map_api/src/entity/param"
 	"residential_map_api/src/entity/response"
 	"residential_map_api/src/usecase/repository"
+	"strconv"
 
 	"github.com/k0kubun/pp"
+	geojson "github.com/paulmach/go.geojson"
 )
+
+const CityIdKey = "N03_007"
 
 type CityDataInteractor struct {
 	CityDataRepository        repository.CityDataRepository
 	CityDataRankingRepository repository.CityDataRankingRepository
+	//起動確認したら修正 GeojsonRepository
+	GeojsonRepository repository.GeoPrefectureRepository
 }
 
-func (cdi *CityDataInteractor) FetchAllCityData() (response.ResStatisticsCityDatas, error) {
+func (cdi *CityDataInteractor) FindByCityId(param *param.GetCitiesCityIdParam) (response.GetCitiesCityIdResponse, error) {
 	var citydata entity.CityDatas
-	citydata, err := cdi.CityDataRepository.FindAll()
-	res := response.ResStatisticsCityDatas{
+	citydata, err := cdi.CityDataRepository.FindByCityId(param.CityId, param.Begin, param.End)
+	res := response.GetCitiesCityIdResponse{
 		Data: citydata,
 	}
 	if err != nil {
-		return response.ResStatisticsCityDatas{}, err
+		return response.GetCitiesCityIdResponse{}, err
 	}
 	return res, nil
 }
 
-func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatas, error) {
+func (cdi *CityDataInteractor) FetchCityDatasByIdPath(cityDataParam *param.CityDataPathParamDto) (response.ResStatisticsCityDatas, error) {
 	var citydata entity.CityDatas
 	citydata, err := cdi.CityDataRepository.FindByCityId(cityDataParam.CityId, cityDataParam.Begin, cityDataParam.End)
 	res := response.ResStatisticsCityDatas{
@@ -38,39 +44,83 @@ func (cdi *CityDataInteractor) FetchCityDatasById(cityDataParam *param.CityDataP
 	return res, nil
 }
 
-func (cdi *CityDataInteractor) CompareCitiesInSamePrefecture(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasBuildCountInSamePrefecture, error) {
-	citydata, err := cdi.CityDataRepository.CompareCitiesInSamePrefecture(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
-	res := response.ResStatisticsCityDatasBuildCountInSamePrefecture{
+func (cdi *CityDataInteractor) FindCityRankingBuildCount(cityDataParam *param.GetCitiesRankingBuildCountParam) (response.GetCitiesRankingBuildCountResponse, error) {
+	citydata, err := cdi.CityDataRepository.FindCityRankingBuildCount(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+	res := response.GetCitiesRankingBuildCountResponse{
 		Data: citydata,
 	}
 	// pp.Println(res)
 	if err != nil {
 		pp.Println(err)
-		return response.ResStatisticsCityDatasBuildCountInSamePrefecture{}, err
+		return response.GetCitiesRankingBuildCountResponse{}, err
 	}
 	pp.Println(res)
 	return res, nil
 }
 
-func (cdi *CityDataInteractor) GetCityDataRanking(cityDataParam *param.CityDataParamDto) (response.ResStatisticsCityDatasBuildCountRanking, error) {
-	var citydata entity.CityDatasBuildCountRanking
-	citydata, err := cdi.CityDataRankingRepository.GetMonthlyCityRankingOfBuildCount(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
-	res := response.ResStatisticsCityDatasBuildCountRanking{
+func (cdi *CityDataInteractor) GetCityDataByTargetPeriod(param *param.GetCitiesCityIdMonthlyParam) (response.GetCitiesCityIdMonthlyResponse, error) {
+	citydata, err := cdi.CityDataRepository.FindByCityIdByTargetPeriod(param.CityId, param.Begin, param.End)
+	res := response.GetCitiesCityIdMonthlyResponse{
 		Data: citydata,
 	}
 	if err != nil {
-		return response.ResStatisticsCityDatasBuildCountRanking{}, err
+		return response.GetCitiesCityIdMonthlyResponse{}, err
 	}
 	return res, nil
 }
 
-func (cdi *CityDataInteractor) GetCityDataByTargetPeriod(cityDataParam *param.CityDataParamDto) (response.ResStatisticsMontylyCityDatas, error) {
-	citydata, err := cdi.CityDataRepository.FindByCityIdByTargetPeriod(cityDataParam.CityId, cityDataParam.Begin, cityDataParam.End)
-	res := response.ResStatisticsMontylyCityDatas{
-		Data: citydata,
+func (gpi *CityDataInteractor) FindCitiesGeojsonByPrefId(param *param.GetCitiesGeojsonParam) (response.ResGeojsonFeatureCollection, error) {
+	result, err := gpi.GeojsonRepository.FindByPrefId(param)
+	var res response.ResGeojsonFeatureCollection
+	for _, c := range result {
+		fc, err := geojson.UnmarshalFeatureCollection(c.Json)
+		if err != nil {
+			return response.ResGeojsonFeatureCollection{}, err
+		}
+		for _, v := range fc.Features {
+			res.AddFeature(v)
+		}
 	}
+
 	if err != nil {
-		return response.ResStatisticsMontylyCityDatas{}, err
+		return response.ResGeojsonFeatureCollection{}, err
+	}
+	return res, nil
+}
+
+func (gpi *CityDataInteractor) FindCitiesGeojsonWithBuildCountByPrefId(param *param.GetCitiesGeojsonBuildCountParam) (response.GetCitiesGeojsonBuildCountResponse, error) {
+	// TODO: 後々に複数の都道府県に対応する
+	result, err := gpi.GeojsonRepository.FindBuildCountByPrefId(param.PrefIds[0], param.Weight, param.Begin, param.End)
+	var res response.GetCitiesGeojsonBuildCountResponse
+	citydata, _ := gpi.CityDataRepository.FindByPrefId(param.PrefIds[0], param.Begin, param.End)
+	if err != nil {
+		return response.GetCitiesGeojsonBuildCountResponse{}, err
+	}
+	// FIXME : 処理が無駄に回ってしまうので最適化
+	for _, c := range result {
+		fc, err := geojson.UnmarshalFeatureCollection(c.Json)
+		if err != nil {
+			return response.GetCitiesGeojsonBuildCountResponse{}, err
+		}
+		for _, v := range fc.Features {
+			// FIXME : 処理が無駄に回ってしまうので最適化
+			cityId := v.Properties[CityIdKey].(string)
+			cityIdInt, _ := strconv.Atoi(cityId)
+			for _, d := range citydata {
+				if d.CityId == cityIdInt {
+					v.Properties["build_count"] = d.BuiltCount
+					v.Properties["total_square_meter"] = d.TotalSquareMeter
+					v.Properties["total_square_meter"] = d.ResidentialUseType
+					v.Properties["total_square_meter"] = d.ConstructionType
+					break
+				}
+			}
+			res.AddFeature(v)
+		}
+	}
+
+	if err != nil {
+		return response.GetCitiesGeojsonBuildCountResponse{}, err
 	}
 	return res, nil
 }

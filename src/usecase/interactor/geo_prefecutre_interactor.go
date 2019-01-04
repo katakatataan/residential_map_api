@@ -14,9 +14,7 @@ type GeoPrefectureInteractor struct {
 	CityDataRepository repository.CityDataRepository
 }
 
-const CityIdKey = "N03_007"
-
-func (gpi *GeoPrefectureInteractor) FindByPrefId(geoPrefParam *param.GeoPrefectureDto) (response.ResGeojsonFeatureCollection, error) {
+func (gpi *GeoPrefectureInteractor) FindByPrefId(geoPrefParam *param.GetCitiesGeojsonParam) (response.ResGeojsonFeatureCollection, error) {
 	result, err := gpi.Repository.FindByPrefId(geoPrefParam)
 	var res response.ResGeojsonFeatureCollection
 	for _, c := range result {

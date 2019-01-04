@@ -9,8 +9,9 @@ type GeoPrefecture struct {
 	SqlHandler
 }
 
-func (cdg *GeoPrefecture) FindByPrefId(mstGeoPrefParam *param.GeoPrefectureDto) ([]entity.MstPrefectureGeojson, error) {
+func (cdg *GeoPrefecture) FindByPrefId(mstGeoPrefParam *param.GetCitiesGeojsonParam) ([]entity.MstPrefectureGeojson, error) {
 	var mstGeojson []entity.MstPrefectureGeojson
+	// csvはsharedに入れる
 	q := "SELECT * FROM mst_prefecture_geojson WHERE pref_id IN (" + mstGeoPrefParam.ToCsvPrefIds() + ") AND weight = $1"
 	err := cdg.Find(&mstGeojson, q, mstGeoPrefParam.Weight)
 	if err != nil {

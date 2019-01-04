@@ -29,7 +29,7 @@ func NewGeoPrefectureController(sqlHandler gateway.SqlHandler) *geoPrefectureCon
 }
 
 func (gp *geoPrefectureController) GeoPlainPrefecture(c Context) error {
-	geoPrefParam := new(param.GeoPrefectureDto)
+	geoPrefParam := new(param.GetCitiesGeojsonParam)
 	err := c.Bind(geoPrefParam)
 	// TODO: コンテキストを引きつづエラーハンドリングに修正
 	if err != nil {
