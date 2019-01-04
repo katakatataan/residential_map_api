@@ -4,6 +4,6 @@ import (
 	"github.com/paulmach/go.geojson"
 )
 
-type ResGeojsonFeatureCollection struct {
+type GetCitiesGeojsonBuildCountResponse struct {
 	geojson.FeatureCollection
 }

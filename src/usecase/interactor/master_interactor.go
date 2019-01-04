@@ -1,8 +1,8 @@
 package interactor
 
 import (
-	"residential_map_api/src/entity/param"
-	"residential_map_api/src/entity/response"
+	"residential_map_api/src/usecase/interactor/param"
+	"residential_map_api/src/usecase/interactor/response"
 	"residential_map_api/src/usecase/repository"
 )
 
@@ -10,35 +10,35 @@ type MstPrefCityInteractor struct {
 	Repository repository.MstPrefCityRepository
 }
 
-func (mpci *MstPrefCityInteractor) FetchAllPrefCities(param *param.MstPrefCityParamDto) (response.ResMasterPrefCities, error) {
+func (mpci *MstPrefCityInteractor) FetchAllPrefCities(param *param.GetMasterPrefCitiesParam) (response.GetMasterPrefCitiesResponse, error) {
 	prefcities, err := mpci.Repository.FindAllPrefCities(param.PrefId)
-	res := response.ResMasterPrefCities{
+	res := response.GetMasterPrefCitiesResponse{
 		prefcities,
 	}
 	if err != nil {
-		return response.ResMasterPrefCities{}, err
+		return response.GetMasterPrefCitiesResponse{}, err
 	}
 	return res, nil
 }
 
-func (mpci *MstPrefCityInteractor) FetchPref() (response.ResMasterPref, error) {
+func (mpci *MstPrefCityInteractor) FetchPref() (response.GetMasterPrefResponse, error) {
 	prefs, err := mpci.Repository.FindPref()
-	res := response.ResMasterPref{
+	res := response.GetMasterPrefResponse{
 		prefs,
 	}
 	if err != nil {
-		return response.ResMasterPref{}, err
+		return response.GetMasterPrefResponse{}, err
 	}
 	return res, nil
 }
 
-func (mpci *MstPrefCityInteractor) FetchCity() (response.ResMasterCity, error) {
+func (mpci *MstPrefCityInteractor) FetchCity() (response.GetMasterCityResponse, error) {
 	prefs, err := mpci.Repository.FindCity()
-	res := response.ResMasterCity{
+	res := response.GetMasterCityResponse{
 		prefs,
 	}
 	if err != nil {
-		return response.ResMasterCity{}, err
+		return response.GetMasterCityResponse{}, err
 	}
 	return res, nil
 }

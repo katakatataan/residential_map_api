@@ -2,9 +2,9 @@ package controller
 
 import (
 	"net/http"
-	"residential_map_api/src/entity/param"
 	"residential_map_api/src/interface/gateway"
 	"residential_map_api/src/usecase/interactor"
+	"residential_map_api/src/usecase/interactor/param"
 
 	"github.com/k0kubun/pp"
 )
@@ -31,33 +31,33 @@ func NewPrefDataController(sqlHandler gateway.SqlHandler) *prefDataController {
 	}
 }
 
-func (pd *prefDataController) GetPrefDataRanking(c Context) error {
-	prefDataParam := new(param.PrefDataParamDto)
-	// TODO: コンテキストを引き継ぐエラーハンドリングに修正
-	err := c.Bind(prefDataParam)
+func (cd *prefDataController) GetPrefDataByPrefId(c Context) error {
+	// TODO ここは集計したことでprefdataになるのでprefControllerに移行
+	param := new(param.GetPrefsPrefIdParam)
+	err := c.Bind(param)
 	if err != nil {
 		return c.JSON(400, err)
 	}
-	err = c.Validate(prefDataParam)
+	err = c.Validate(param)
 	if err != nil {
 		return c.JSON(400, err)
 	}
-	result, err := pd.Interactor.GetPrefDataRanking(prefDataParam)
+	pp.Println(param)
+	result, err := cd.Interactor.GetPrefDataByPrefId(param)
 	return c.JSON(http.StatusOK, result)
 }
 
-func (cd *prefDataController) GetPrefDataByPrefId(c Context) error {
-	// TODO ここは集計したことでprefdataになるのでprefControllerに移行
-	prefDataParam := new(param.PrefDataParamDto)
-	err := c.Bind(prefDataParam)
+func (pd *prefDataController) GetPrefDataRankingBuildCount(c Context) error {
+	param := new(param.GetPrefsRankingBuildCountParam)
+	// TODO: コンテキストを引き継ぐエラーハンドリングに修正
+	err := c.Bind(param)
 	if err != nil {
 		return c.JSON(400, err)
 	}
-	err = c.Validate(prefDataParam)
+	err = c.Validate(param)
 	if err != nil {
 		return c.JSON(400, err)
 	}
-	pp.Println(prefDataParam)
-	result, err := cd.Interactor.FetchPrefDatasByPrefId(prefDataParam)
+	result, err := pd.Interactor.GetPrefDataRankingBuildCount(param)
 	return c.JSON(http.StatusOK, result)
 }

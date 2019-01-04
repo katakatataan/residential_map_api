@@ -24,13 +24,14 @@ func Run(e *echo.Echo) {
 	e.Validator = NewValidator()
 
 	// Bind
-	// e.Binder = NewBinder()
+	e.Binder = NewBinder()
+
 	sqlHandler := NewSqlHandler()
 	routeForDebug(e)
 	routeForAuthRequired(e.Group("/restricted"))
+	routeForCity(e.Group("/cities"), sqlHandler)
+	routeForPref(e.Group("/prefs"), sqlHandler)
 	routeForMaster(e.Group("/master"), sqlHandler)
-	routeForGeojson(e.Group("/geojson"), sqlHandler)
-	routeForStatistics(e.Group("/statistics"), sqlHandler)
 
 	echopprof.Wrap(e)
 	// e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))

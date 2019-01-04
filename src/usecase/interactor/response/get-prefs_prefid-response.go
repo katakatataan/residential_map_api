@@ -4,6 +4,6 @@ import (
 	"residential_map_api/src/entity"
 )
 
-type ResStatisticsCityDatasByPrefId struct {
+type GetPrefsPrefIdResponse struct {
 	Data entity.PrefDatas `json:"data"`
 }

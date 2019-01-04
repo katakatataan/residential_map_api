@@ -4,6 +4,6 @@ import (
 	"residential_map_api/src/entity"
 )
 
-type ResMasterCity struct {
+type GetMasterCityResponse struct {
 	Data entity.Cities `json:"data"`
 }

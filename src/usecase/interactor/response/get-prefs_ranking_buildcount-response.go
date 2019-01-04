@@ -4,6 +4,6 @@ import (
 	"residential_map_api/src/entity"
 )
 
-type ResStatisticsPrefDatasBuildCountRanking struct {
+type GetPrefsRankingBuildCountResponse struct {
 	Data entity.PrefDatasBuildCountRanking `json:"data"`
 }

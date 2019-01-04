@@ -1,5 +1,5 @@
 package response
 
-type ResStatisticsMontylyCityDatas struct {
+type GetCitiesCityIdMonthlyResponse struct {
 	Data interface{} `json:"data"`
 }

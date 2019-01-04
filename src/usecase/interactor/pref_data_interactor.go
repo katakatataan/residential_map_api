@@ -2,8 +2,8 @@ package interactor
 
 import (
 	"residential_map_api/src/entity"
-	"residential_map_api/src/entity/param"
-	"residential_map_api/src/entity/response"
+	"residential_map_api/src/usecase/interactor/param"
+	"residential_map_api/src/usecase/interactor/response"
 	"residential_map_api/src/usecase/repository"
 )
 
@@ -12,25 +12,25 @@ type PrefDataInteractor struct {
 	PrefDataRepository        repository.PrefDataRepository
 }
 
-func (cdi *PrefDataInteractor) GetPrefDataRanking(prefDataParam *param.PrefDataParamDto) (response.ResStatisticsPrefDatasBuildCountRanking, error) {
+func (cdi *PrefDataInteractor) GetPrefDataRankingBuildCount(param *param.GetPrefsRankingBuildCountParam) (response.GetPrefsRankingBuildCountResponse, error) {
 	var prefData entity.PrefDatasBuildCountRanking
-	prefData, err := cdi.PrefDataRankingRepository.GetMonthlyPrefRankingOfBuildCount(prefDataParam.Begin, prefDataParam.End)
-	res := response.ResStatisticsPrefDatasBuildCountRanking{
+	prefData, err := cdi.PrefDataRankingRepository.GetMonthlyPrefRankingOfBuildCount(param.Begin, param.End)
+	res := response.GetPrefsRankingBuildCountResponse{
 		Data: prefData,
 	}
 	if err != nil {
-		return response.ResStatisticsPrefDatasBuildCountRanking{}, err
+		return response.GetPrefsRankingBuildCountResponse{}, err
 	}
 	return res, nil
 }
 
-func (cdi *PrefDataInteractor) FetchPrefDatasByPrefId(cityDataParam *param.PrefDataParamDto) (response.ResStatisticsCityDatasByPrefId, error) {
+func (cdi *PrefDataInteractor) GetPrefDataByPrefId(param *param.GetPrefsPrefIdParam) (response.GetPrefsPrefIdResponse, error) {
 	var prefData entity.PrefDatas
-	prefData, err := cdi.PrefDataRepository.FindByPrefId(cityDataParam.PrefId, cityDataParam.Begin, cityDataParam.End)
+	prefData, err := cdi.PrefDataRepository.FindByPrefId(param.PrefId, param.Begin, param.End)
 	if err != nil {
-		return response.ResStatisticsCityDatasByPrefId{}, err
+		return response.GetPrefsPrefIdResponse{}, err
 	}
-	res := response.ResStatisticsCityDatasByPrefId{
+	res := response.GetPrefsPrefIdResponse{
 		Data: prefData,
 	}
 	return res, nil
