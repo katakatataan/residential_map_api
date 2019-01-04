@@ -4,6 +4,6 @@ import (
 	"residential_map_api/src/entity"
 )
 
-type ResMasterPref struct {
+type GetMasterPrefResponse struct {
 	Data entity.Prefs `json:"data"`
 }

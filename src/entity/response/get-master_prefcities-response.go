@@ -1,5 +1,9 @@
 package response
 
-type GetMasterPrefCitiesParam struct {
-	PrefId int `query:"pref_id"`
+import (
+	"residential_map_api/src/entity"
+)
+
+type GetMasterPrefCitiesResponse struct {
+	Data entity.PrefCities `json:"data"`
 }

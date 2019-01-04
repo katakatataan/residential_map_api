@@ -26,17 +26,17 @@ func NewMstPrefCityController(sqlHandler gateway.SqlHandler) *mstPrefCityControl
 }
 
 func (mpc *mstPrefCityController) GetMstPrefCity(c Context) error {
-	prefDataParam := new(param.MstPrefCityParamDto)
-	err := c.Bind(prefDataParam)
+	param := new(param.GetMasterPrefCitiesParam)
+	err := c.Bind(param)
 	// TOOD: コンテキストを引き継ぐエラーハンドリングに修正
 	if err != nil {
 		return c.JSON(400, err)
 	}
-	err = c.Validate(prefDataParam)
+	err = c.Validate(param)
 	if err != nil {
 		return c.JSON(400, err)
 	}
-	result, err := mpc.Interactor.FetchAllPrefCities(prefDataParam)
+	result, err := mpc.Interactor.FetchAllPrefCities(param)
 	if err != nil {
 		return err
 	}

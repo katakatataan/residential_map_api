@@ -25,17 +25,13 @@ func Run(e *echo.Echo) {
 
 	// Bind
 	e.Binder = NewBinder()
+
 	sqlHandler := NewSqlHandler()
 	routeForDebug(e)
 	routeForAuthRequired(e.Group("/restricted"))
-	//　機能でルーティングを分けるとメンテナンス性が非常に悪くなるやはりドメインに従って設計する
-	routeForMaster(e.Group("/master"), sqlHandler)
-	// routeForGeojson(e.Group("/geojson"), sqlHandler)
-	// routeForStatistics(e.Group("/statistics"), sqlHandler)
-
-	//domainに着目した新しいrouting
 	routeForCity(e.Group("/cities"), sqlHandler)
 	routeForPref(e.Group("/prefs"), sqlHandler)
+	routeForMaster(e.Group("/master"), sqlHandler)
 
 	echopprof.Wrap(e)
 	// e.Logger.Fatal(e.StartTLS(":1323", "cert.pem", "key.pem"))

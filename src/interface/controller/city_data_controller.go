@@ -29,7 +29,7 @@ func NewCityDataController(sqlHandler gateway.SqlHandler) *cityDataController {
 			CityDataRepository: &gateway.CityDataGateway{
 				SqlHandler: sqlHandler,
 			},
-			GeojsonRepository: &gateway.GeoPrefecture{
+			GeojsonRepository: &gateway.GeojsonGateway{
 				SqlHandler: sqlHandler,
 			},
 		},

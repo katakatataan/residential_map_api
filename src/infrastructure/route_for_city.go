@@ -7,13 +7,12 @@ import (
 )
 
 func routeForCity(g *echo.Group, sqlHandler SqlHandler) {
-	// もとは/statistics/city
+	// 表から未使用
 	g.GET("/:CityId", func(c echo.Context) error {
 		// 命名規則は一つの市区町村にたいしてなのでfindではなくget
 		return controller.NewCityDataController(&sqlHandler).GetCityDataByCityId(c)
 	})
 
-	// //　もとはstatistics/city/monthly
 	g.GET("/:CityId/monthly", func(c echo.Context) error {
 		// 命名規則は一つの市区町村にたいしてなのでfindではなくget
 		// 対象期間TargetPeriod
@@ -25,10 +24,10 @@ func routeForCity(g *echo.Group, sqlHandler SqlHandler) {
 		return controller.NewCityDataController(&sqlHandler).FindCityRankingBuildCount(c)
 	})
 
-	// もとはstatistics/city/build_count
 	g.GET("/geojson/build_count", func(c echo.Context) error {
 		return controller.NewCityDataController(&sqlHandler).FindCitiesGeojsonWithBuildCount(c)
 	})
+
 	g.GET("/geojson", func(c echo.Context) error {
 		return controller.NewCityDataController(&sqlHandler).FindCitiesGeojson(c)
 	})

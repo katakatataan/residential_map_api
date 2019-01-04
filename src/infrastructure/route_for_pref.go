@@ -7,12 +7,12 @@ import (
 )
 
 func routeForPref(g *echo.Group, sqlHandler SqlHandler) {
-	// もとはstatistics/pref
+	// 表から未使用
 	g.GET("/:PrefId", func(c echo.Context) error {
 		return controller.NewPrefDataController(&sqlHandler).GetPrefDataByPrefId(c)
 	})
 
-	// もとはstatistics/pref/ranking/build_count
+	// 表から未使用
 	g.GET("/ranking/build_count", func(c echo.Context) error {
 		return controller.NewPrefDataController(&sqlHandler).GetPrefDataRankingBuildCount(c)
 	})

@@ -17,7 +17,7 @@ type CityDataInteractor struct {
 	CityDataRepository        repository.CityDataRepository
 	CityDataRankingRepository repository.CityDataRankingRepository
 	//起動確認したら修正 GeojsonRepository
-	GeojsonRepository repository.GeoPrefectureRepository
+	GeojsonRepository repository.GeojsonRepository
 }
 
 func (cdi *CityDataInteractor) FindByCityId(param *param.GetCitiesCityIdParam) (response.GetCitiesCityIdResponse, error) {
@@ -28,18 +28,6 @@ func (cdi *CityDataInteractor) FindByCityId(param *param.GetCitiesCityIdParam) (
 	}
 	if err != nil {
 		return response.GetCitiesCityIdResponse{}, err
-	}
-	return res, nil
-}
-
-func (cdi *CityDataInteractor) FetchCityDatasByIdPath(cityDataParam *param.CityDataPathParamDto) (response.ResStatisticsCityDatas, error) {
-	var citydata entity.CityDatas
-	citydata, err := cdi.CityDataRepository.FindByCityId(cityDataParam.CityId, cityDataParam.Begin, cityDataParam.End)
-	res := response.ResStatisticsCityDatas{
-		Data: citydata,
-	}
-	if err != nil {
-		return response.ResStatisticsCityDatas{}, err
 	}
 	return res, nil
 }
@@ -69,13 +57,13 @@ func (cdi *CityDataInteractor) GetCityDataByTargetPeriod(param *param.GetCitiesC
 	return res, nil
 }
 
-func (gpi *CityDataInteractor) FindCitiesGeojsonByPrefId(param *param.GetCitiesGeojsonParam) (response.ResGeojsonFeatureCollection, error) {
+func (gpi *CityDataInteractor) FindCitiesGeojsonByPrefId(param *param.GetCitiesGeojsonParam) (response.GetCitiesGeojsonResponse, error) {
 	result, err := gpi.GeojsonRepository.FindByPrefId(param)
-	var res response.ResGeojsonFeatureCollection
+	var res response.GetCitiesGeojsonResponse
 	for _, c := range result {
 		fc, err := geojson.UnmarshalFeatureCollection(c.Json)
 		if err != nil {
-			return response.ResGeojsonFeatureCollection{}, err
+			return response.GetCitiesGeojsonResponse{}, err
 		}
 		for _, v := range fc.Features {
 			res.AddFeature(v)
@@ -83,7 +71,7 @@ func (gpi *CityDataInteractor) FindCitiesGeojsonByPrefId(param *param.GetCitiesG
 	}
 
 	if err != nil {
-		return response.ResGeojsonFeatureCollection{}, err
+		return response.GetCitiesGeojsonResponse{}, err
 	}
 	return res, nil
 }

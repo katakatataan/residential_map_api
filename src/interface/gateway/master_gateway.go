@@ -13,7 +13,13 @@ type MstPrefCityGateway struct {
 func (pcg *MstPrefCityGateway) FindAllPrefCities(prefId int) (entity.PrefCities, error) {
 	var prefCities entity.PrefCities
 	pp.Println(prefId)
-	err := pcg.Find(&prefCities, "SELECT * FROM mst_pref_city WHERE pref_id = $1 ORDER BY id ASC", prefId)
+	err := pcg.Find(&prefCities, `SELECT
+			*
+		FROM
+			mst_pref_city
+		WHERE
+			pref_id = $1
+		ORDER BY id ASC`, prefId)
 	if err != nil {
 		return entity.PrefCities{}, err
 	}
@@ -22,7 +28,11 @@ func (pcg *MstPrefCityGateway) FindAllPrefCities(prefId int) (entity.PrefCities,
 
 func (pcg *MstPrefCityGateway) FindPref() (entity.Prefs, error) {
 	var prefs entity.Prefs
-	err := pcg.Find(&prefs, "SELECT * FROM mst_pref ORDER BY id ASC")
+	err := pcg.Find(&prefs, `SELECT
+			*
+		FROM
+			mst_pref
+		ORDER BY id ASC`)
 	if err != nil {
 		return entity.Prefs{}, err
 	}
@@ -31,7 +41,11 @@ func (pcg *MstPrefCityGateway) FindPref() (entity.Prefs, error) {
 
 func (pcg *MstPrefCityGateway) FindCity() (entity.Cities, error) {
 	var cities entity.Cities
-	err := pcg.Find(&cities, "SELECT * FROM mst_city ORDER BY id ASC")
+	err := pcg.Find(&cities, `SELECT
+			*
+		FROM
+			mst_city
+		ORDER BY id ASC`)
 	if err != nil {
 		return entity.Cities{}, err
 	}
