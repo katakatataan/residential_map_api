@@ -104,8 +104,8 @@ func (gpi *CityDataInteractor) FindCitiesGeojsonWithBuildCountByPrefId(param *pa
 				if d.CityId == cityIdInt {
 					v.Properties["build_count"] = d.BuiltCount
 					v.Properties["total_square_meter"] = d.TotalSquareMeter
-					v.Properties["total_square_meter"] = d.ResidentialUseType
-					v.Properties["total_square_meter"] = d.ConstructionType
+					v.Properties["residential_use_type"] = d.ResidentialUseType
+					v.Properties["construction_type"] = d.ConstructionType
 					break
 				}
 			}
