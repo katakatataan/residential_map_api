@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"residential_map_api/src/interface/gateway"
+	"time"
 
 	"github.com/jmoiron/sqlx"
 )
@@ -23,6 +24,7 @@ func NewSqlHandler() SqlHandler {
 	if conn == nil {
 		fmt.Println("connection error")
 	}
+	conn.SetConnMaxLifetime(2 * time.Minute)
 	conn.SetMaxOpenConns(10)
 	conn.SetMaxIdleConns(5)
 	return SqlHandler{
