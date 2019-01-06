@@ -104,10 +104,8 @@ func (cdg *CityDataGateway) FindByPrefId(pref_id int, begin string, end string) 
 			cd.city_id ASC,
 			cd.build_date ASC`, pref_id, begin, end)
 	if err != nil {
-		pp.Println(err)
 		return entity.CityDatas{}, err
 	}
-	pp.Println(cityDatas)
 	return cityDatas, nil
 }
 

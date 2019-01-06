@@ -83,6 +83,7 @@ func (cd *cityDataController) GetCityDataByTargetPeriod(c Context) error {
 func (gp *cityDataController) FindCitiesGeojsonWithBuildCount(c Context) error {
 	param := new(param.GetCitiesGeojsonBuildCountParam)
 	err := c.Bind(param)
+	pp.Println(param)
 	// TODO: コンテキストを引きつづエラーハンドリングに修正
 	if err != nil {
 		return c.JSON(400, err)

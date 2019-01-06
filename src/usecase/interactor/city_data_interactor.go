@@ -39,10 +39,8 @@ func (cdi *CityDataInteractor) FindCityRankingBuildCount(cityDataParam *param.Ge
 	}
 	// pp.Println(res)
 	if err != nil {
-		pp.Println(err)
 		return response.GetCitiesRankingBuildCountResponse{}, err
 	}
-	pp.Println(res)
 	return res, nil
 }
 
@@ -78,20 +76,28 @@ func (gpi *CityDataInteractor) FindCitiesGeojsonByPrefId(param *param.GetCitiesG
 
 func (gpi *CityDataInteractor) FindCitiesGeojsonWithBuildCountByPrefId(param *param.GetCitiesGeojsonBuildCountParam) (response.GetCitiesGeojsonBuildCountResponse, error) {
 	// TODO: 後々に複数の都道府県に対応する
+	pp.Println("hello")
 	result, err := gpi.GeojsonRepository.FindBuildCountByPrefId(param.PrefIds[0], param.Weight, param.Begin, param.End)
+	pp.Println(err)
 	var res response.GetCitiesGeojsonBuildCountResponse
 	citydata, _ := gpi.CityDataRepository.FindByPrefId(param.PrefIds[0], param.Begin, param.End)
 	if err != nil {
+		pp.Println(err)
 		return response.GetCitiesGeojsonBuildCountResponse{}, err
 	}
 	// FIXME : 処理が無駄に回ってしまうので最適化
 	for _, c := range result {
 		fc, err := geojson.UnmarshalFeatureCollection(c.Json)
 		if err != nil {
+			pp.Println(err)
 			return response.GetCitiesGeojsonBuildCountResponse{}, err
 		}
 		for _, v := range fc.Features {
 			// FIXME : 処理が無駄に回ってしまうので最適化
+			// N0#007にnilのvalueが存在する
+			if v.Properties[CityIdKey] == nil {
+				continue
+			}
 			cityId := v.Properties[CityIdKey].(string)
 			cityIdInt, _ := strconv.Atoi(cityId)
 			for _, d := range citydata {
