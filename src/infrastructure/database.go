@@ -23,6 +23,8 @@ func NewSqlHandler() SqlHandler {
 	if conn == nil {
 		fmt.Println("connection error")
 	}
+	conn.SetMaxOpenConns(10)
+	conn.SetMaxIdleConns(5)
 	return SqlHandler{
 		Conn: conn,
 	}
