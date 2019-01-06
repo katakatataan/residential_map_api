@@ -1,11 +1,8 @@
 package gateway
 
 import (
-	"fmt"
-	"os"
 	"residential_map_api/src/entity"
 
-	"github.com/jmoiron/sqlx"
 	"github.com/k0kubun/pp"
 	null "gopkg.in/guregu/null.v3"
 )
@@ -111,9 +108,9 @@ func (cdg *CityDataGateway) FindByPrefId(pref_id int, begin string, end string) 
 
 func (cdg *CityDataGateway) FindCityRankingBuildCount(prefId int, begin string, end string) (interface{}, error) {
 	// TODO: ここ今interface作るの面倒なのであとで直す
-	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME"), os.Getenv("DATABASE_HOST")))
-	// TODO: マスターコード変換
-	rows, err := conn.Query(`SELECT
+	// conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME"), os.Getenv("DATABASE_HOST")))
+	// // TODO: マスターコード変換
+	rows, err := cdg.SqlHandler.Query(`SELECT
 			id,
 			year,
 			month,
@@ -179,8 +176,8 @@ func (cdg *CityDataGateway) FindByCityIdByTargetPeriod(cityId int, begin string,
 	// TODO: ここ今interface作るの面倒なのであとで直す
 	// TODO: 市区町村のでゼロ件表示に対応できているのか修正
 	// TODO: マスターコード変換
-	conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME"), os.Getenv("DATABASE_HOST")))
-	rows, err := conn.Query(`SELECT
+	// conn, err := sqlx.Connect("postgres", fmt.Sprintf("user=%s password=%s dbname=%s host=%s port=5432 sslmode=disable", os.Getenv("DATABASE_USER"), os.Getenv("DATABASE_PASSWORD"), os.Getenv("DATABASE_NAME"), os.Getenv("DATABASE_HOST")))
+	rows, err := cdg.SqlHandler.Query(`SELECT
 			id,
 			year,
 			month,
