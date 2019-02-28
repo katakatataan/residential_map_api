@@ -1,7 +1,7 @@
 {
   "AWSEBDockerrunVersion": "1",
   "Image": {
-    "Name": "029792315346.dkr.ecr.ap-northeast-1.amazonaws.com/residential_map/residential_map_api:latest",
+    "Name": "029792315346.dkr.ecr.ap-northeast-1.amazonaws.com/residential_map_api:latest",
     "Update": "true"
   },
   "Ports": [
