@@ -1,0 +1,6 @@
+sonar.projectBaseDir=.
+sonar.sources=.
+sonar.exclusions=.build/**
+
+sonar.analysis.mode=preview
+sonar.github.repository=katakatataan/residential_map_api
