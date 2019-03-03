@@ -7,9 +7,9 @@ env:
 phases:
   install:
     commands:
-      - wget https://sonarsource.bintray.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.2.0.1227-linux.zip
-      - unzip sonar-scanner-cli-3.2.0.1227-linux.zip -d .build
-      - export PATH=$PATH:./.build/sonar-scanner-3.2.0.1227-linux/bin
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip
+      - unzip sonar-scanner-cli-3.3.0.1492-linux.zip -d .build
+      - export PATH=$PATH:./.build/sonar-scanner-3.3.0.1492-linux/bin
   build:
     commands:
       - export PULL_REQUEST_ID=`echo ${CODEBUILD_SOURCE_VERSION} | sed -e 's/pr\///'`
