@@ -3,7 +3,7 @@ env:
   parameter-store:
     SONARQUBE_TOKEN: "SONARQUBE_TOKEN"
     SONARQUBE_ENDPOINT: "SONARQUBE_ENDPOINT"
-    GITHUB_TOKEN: "GithubToken"
+    GITHUB_TOKEN: "GitHubToken"
 phases:
   install:
     commands:
