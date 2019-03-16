@@ -1,6 +1,7 @@
 package infrastructure
 
 import (
+	"net/http"
 	"os"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -49,6 +50,9 @@ func Run(e *echo.Echo) {
 	e.Binder = NewBinder()
 
 	sqlHandler := NewSqlHandler()
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "success")
+	})
 	routeForDebug(e)
 	routeForAuthRequired(e.Group("/restricted"))
 	routeForCity(e.Group("/cities"), sqlHandler)
